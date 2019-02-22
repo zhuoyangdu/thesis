@@ -1,0 +1,36 @@
+single: True
+road_file: "/Users/zhuoyang/workspace/planning/resources/speed_test_path/unstructured_path.txt"
+test_config_file: "/Users/zhuoyang/workspace/planning/resources/roads/unstructured_conf.txt"
+scene: "complex"
+record: True
+record_path: "/Users/zhuoyang/Documents/du/origin_data/0107speed/"
+structured_map: False
+scale: 0.0391
+
+rrt {
+	max_failed_attemptes: 10000
+	t_max: 8
+	s_max: 250
+	t_goal: 5
+	v_goal: 30
+	dt: 0.1
+	max_acc: 100
+	max_vel: 50
+	max_heading_rate: 1.8
+	kr: 10
+	ks: 3
+	kv: 6
+	k_jerk: 0
+	lower_range_t: 1
+	lower_range_s: 10
+	upper_range_t: 1
+	upper_range_s: 10
+	upper_range_a:0.1
+	lower_range_a:0.1
+	k_risk: 10
+	danger_distance: 30
+	safe_distance: 500
+	car_width: 25
+	collision_distance: 30
+	safe_ttc: 5
+}

@@ -1,0 +1,170 @@
+type: STRUCTURED_ENVIRONMENT;
+lane_width: 3.75
+
+reference_route {
+route_points {
+	x: -200.000
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -190.105
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -180.211
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -170.316
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -160.421
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -150.526
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -140.632
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -130.737
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -120.842
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -110.947
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -101.053
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -91.158
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -81.263
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -71.368
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -61.474
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -51.579
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -41.684
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -31.789
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -21.895
+	y: -5.625
+	theta: 0
+ }
+route_points {
+	x: -12.000
+	y: -5.625
+	theta: 0
+ }
+
+}
+
+ego_car {
+    x: -150
+    y: -5.625
+    theta: 0
+    s: 50
+    velocity: 10
+    acceleration: 0
+}
+
+dynamic_obs {
+    obstacle {
+        x: -110
+        y: -9.375
+        theta: 0
+        velocity: 3
+        acceleration: 0
+    }
+}
+
+static_obs {
+    obstacle {
+        x: -135
+        y: -3.3750
+        theta: 0
+        velocity: 0
+        acceleration: 0
+    }
+
+    obstacle {
+        x: -128
+        y: -3.5
+        theta: 0
+        velocity: 0
+        acceleration: 0
+    }
+
+    obstacle {
+        x: -120
+        y: -3.75
+        theta: 0
+        velocity: 0
+        acceleration: 0
+    }
+    obstacle {
+        x: -140
+        y: -9.5
+        theta: 0
+        velocity: 0
+        acceleration: 0
+    }
+    obstacle {
+        x: -115
+        y: -9.2
+        theta: 0
+        velocity: 0
+        acceleration: 0
+    }
+}
+
+goal {
+    delta_s: 60
+    d: 0
+}

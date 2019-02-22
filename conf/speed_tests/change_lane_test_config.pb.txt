@@ -1,0 +1,60 @@
+dynamic_obs {
+obstacle {
+    x: -100
+    y: 1.875
+    theta: -1.57
+    velocity: 10
+    acceleration: 0
+    id: "obs3"
+    timestamp: 0
+}
+
+obstacle {
+    x: 100
+    y: -1.875
+    theta: 1.57
+    velocity: 20
+    acceleration: 0
+    id: "obs2"
+    timestamp: 0
+}
+
+obstacle {
+    x: -160
+    y: -5.625
+    theta: 1.57
+    velocity: 12
+    acceleration: 0
+    id: "obs2"
+    timestamp: 0
+}
+
+obstacle {
+    x: -183
+    y: -1.875
+    theta: 1.57
+    velocity: 12
+    acceleration: 0
+    id: "obs2"
+    timestamp: 0
+}
+
+obstacle {
+    x: -180
+    y: -5.625
+    theta: 1.57
+    velocity: 12
+    acceleration: 0
+    id: "obs2"
+    timestamp: 0
+}
+}
+
+ego_car {
+    timestamp: 0
+    x: -170
+    y: -5.625
+    theta: 1.57
+    velocity: 11
+    acceleration: 0
+}

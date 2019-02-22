@@ -1,0 +1,64 @@
+syntax = "proto2";
+
+package planning;
+
+import "environment_conf.proto";
+
+message RRTConf {
+    optional double time_step = 1;
+    optional double k_voronoi = 2;
+    optional double k_goal = 3;
+    optional bool show_image = 4;
+    optional int32 max_attemp = 5;
+    optional int32 step_size = 6;
+    optional bool turn_on_prior = 7;
+    optional double k_repulsive = 8;
+    optional int32 post_iteration = 9;
+    optional bool record = 10;
+    optional string record_path = 11;
+    optional bool uniform_sample = 12;
+    optional int32 pivots_k = 13;
+    optional FrenetFrameConf frenet_conf = 14;
+}
+
+message SearchingImageBorder {
+    optional double delta_col = 1;
+    optional double delta_row = 2;
+    optional double col0 = 3;
+    optional double col1 = 4;
+    optional double row0 = 5;
+    optional double row1 = 6;
+    optional double resolution_col = 7;
+    optional double resolution_row = 8;
+}
+
+message FrenetFrameConf {
+    optional double dd = 1;
+    optional double ds = 2;
+    optional int32 image_row = 3;
+    optional int32 image_col = 4;
+    optional double lane_width = 5;
+    optional double min_lane = 6;
+    optional double max_lane = 7;
+}
+
+message Goal {
+    optional double row = 1;
+    optional double col = 2;
+}
+
+message FakeState {
+    optional double x = 1;
+    optional double y = 2;
+    optional double theta = 3;
+}
+
+message PathPlannerConf {
+    optional bool use_sim_time = 1;
+    optional RRTConf rrt_conf = 2;
+    optional Goal goal = 4;
+    optional FakeState fake_state = 7;
+    optional string environment_conf_path = 8;
+    optional EnvironmentConf environment_conf = 9;
+}
+

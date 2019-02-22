@@ -1,0 +1,35 @@
+single: True
+road_file: "/Users/zhuoyang/Documents/du/origin_data/selected/scenario5/center/globalpath.txt"
+test_config_file: "/Users/zhuoyang/workspace/planning/resources/roads/environment_conf_05.txt"
+scene: "complex"
+record: True
+record_path: "/Users/zhuoyang/Documents/du/origin_data/0107speed/"
+structured_map: True
+
+rrt {
+	max_failed_attemptes: 5000
+	t_max: 8
+	s_max: 100
+	t_goal: 5
+	v_goal: 8
+	dt: 0.1
+	max_acc: 5
+	max_vel: 12
+	max_heading_rate: 1.8
+	kr: 10
+	ks: 3
+	kv: 6
+	k_jerk: 0
+	lower_range_t: 1
+	lower_range_s: 10
+	upper_range_t: 1
+	upper_range_s: 10
+	upper_range_a:0.1
+	lower_range_a:0.1
+	k_risk: 10
+	danger_distance: 2.4
+	safe_distance: 100
+	car_width: 2
+	collision_distance: 2.4
+	safe_ttc: 5
+}

@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+package planning;
+
+message VehicleState {
+    optional double x = 1;
+    optional double y = 2;
+    optional double theta = 3;
+    optional double velocity = 5;
+    optional double acceleration = 6;
+    optional double s = 7;
+    optional double d = 8;
+    optional string id = 4;
+    optional double timestamp = 10;
+    optional VehicleShape vehicle_shape = 9;
+    optional double length = 11; // Path Length not route length.
+}
+
+message VehicleShape {
+    optional double width = 1;
+    optional double length = 2;
+}

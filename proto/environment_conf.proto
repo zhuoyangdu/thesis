@@ -1,0 +1,39 @@
+syntax = "proto2";
+
+package planning;
+
+import "vehicle_state.proto";
+
+import "prediction_obstacles.proto";
+
+message RoutePoint {
+    optional double x = 1;
+    optional double y = 2;
+    optional double theta = 3;
+}
+
+message Route {
+    repeated RoutePoint route_points = 1;
+}
+
+message EnvironmentConf {
+    enum EnvironmentType {
+        UNSTRUCTURED_ENVIRONMENT = 1;
+        STRUCTURED_ENVIRONMENT = 2;
+    }
+
+    optional EnvironmentType type = 3;
+    optional string map_path = 4;
+    optional Route reference_route = 5;
+    optional double lane_width = 8;
+
+    optional VehicleState ego_car = 6;
+    optional PredictionObstacles static_obs =10;
+    optional PredictionObstacles dynamic_obs = 7;
+    optional FrenetGoal goal = 9;
+}
+
+message FrenetGoal {
+    optional double delta_s = 1;
+    optional double d = 2;
+}

@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package planning;
+
+message PredictionObstacle {
+    optional double x = 1;
+    optional double y = 2;
+    optional double theta = 3;
+    optional double timestamp = 4;
+    optional double velocity = 5;
+    optional double acceleration = 6;
+    optional double s = 7;
+    optional double d = 8;
+    optional string id = 9;
+}
+
+message PredictionObstacles {
+    repeated PredictionObstacle obstacle = 1;
+}

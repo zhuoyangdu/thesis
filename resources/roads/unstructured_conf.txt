@@ -1,0 +1,25 @@
+ego_car {
+    x: 196
+    y: 396
+    theta: 0
+    s: 0
+    velocity: 20
+    acceleration: 0
+}
+
+dynamic_obs {
+    obstacle {
+        x: 200
+        y: 300
+        theta: 3.14
+        velocity: 25
+        acceleration: 0
+    }
+    obstacle {
+        x: 20
+        y: 220
+        theta: 0
+        velocity: 20
+        acceleration: 0
+    }
+}

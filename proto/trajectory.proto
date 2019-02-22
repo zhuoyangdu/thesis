@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+package planning;
+
+import "vehicle_state.proto";
+
+message Trajectory {
+    repeated VehicleState vehicle_states = 1;
+}
