@@ -10,8 +10,8 @@
 #include <map>
 
 #include "node.h"
-#include "../utils/spline.h"
 #include "dynamic_obstacles.h"
+#include "../utils/spline.h"
 #include "../common/reference_path.h"
 #include "../frame/frame.h"
 #include "../utils/timer.h"

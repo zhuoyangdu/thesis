@@ -2,13 +2,14 @@
 #define PLANNING_SRC_ROUTE_H_
 
 #include <iostream>
+
 #include "../utils/spline.h"
 #include "../utils/file_config.h"
 #include "../utils/string.h"
 
 namespace planning {
 class ReferencePath {
-public:
+ public:
     ReferencePath() = default;
 
     ReferencePath(const std::string& road_file);
@@ -25,8 +26,7 @@ public:
 
     double theta(double s) { return atan2(curve_x_.deriv1(s), curve_y_.deriv1(s)); }
 
-private:
-
+ private:
     void GetGeometryPath();
 
     std::string planning_path_;

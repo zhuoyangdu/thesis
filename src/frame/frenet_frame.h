@@ -34,19 +34,22 @@ public:
 
     void FromFrenetToImage(double s, double d,
                            double* row, double* col) const {
-        *row = frenet_frame_conf_.image_row() - (d - d0_) / frenet_frame_conf_.dd()-1;
+        *row = frenet_frame_conf_.image_row()
+               - (d - d0_) / frenet_frame_conf_.dd()-1;
         *col = (s - s0_) / frenet_frame_conf_.ds();
     }
 
     cv::Point FromFrenetToImage(double s, double d) const {
-        double row = frenet_frame_conf_.image_row() - (d - d0_) / frenet_frame_conf_.dd()-1;
+        double row = frenet_frame_conf_.image_row()
+                     - (d - d0_) / frenet_frame_conf_.dd()-1;
         double col = (s - s0_) / frenet_frame_conf_.ds();
         return cv::Point(col, row);
     }
     void FromImageToFrenet(double row, double col,
                            double* s, double* d) const {
         *s = col * frenet_frame_conf_.ds() + s0_;
-        *d = (frenet_frame_conf_.image_row() - row) * frenet_frame_conf_.dd() + d0_;
+        *d = (frenet_frame_conf_.image_row() - row)
+             * frenet_frame_conf_.dd() + d0_;
     }
 
     cv::Mat GetFrenetSpace() const {return image_frenet_; }
@@ -65,7 +68,9 @@ public:
         return FromFrenetToImage(s, d);
     }
 
-    planning::ReferenceRoute ReferenceRoute() const {return reference_route_; }
+    planning::ReferenceRoute ReferenceRoute() const {
+        return reference_route_;
+    }
 
     vector<vector<cv::Point>> obstacle_polygons() const {
         return obstacle_polygons_;

@@ -21,7 +21,6 @@ FrenetFrame::FrenetFrame(const planning::ReferenceRoute &reference_route,
     DrawSDMap();
 }
 
-
 void FrenetFrame::DrawSDMap() {
     std::cout << "frenet frame conf : dd: " << frenet_frame_conf_.dd() << ","
         << "ds:" << frenet_frame_conf_.ds()

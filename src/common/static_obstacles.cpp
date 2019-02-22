@@ -4,11 +4,10 @@
 
 #include "static_obstacles.h"
 
-
 namespace planning {
 
 StaticObstacle::StaticObstacle(const planning::PredictionObstacle& prediction_obstacle)
-    : obstacle_(prediction_obstacle){
+    : obstacle_(prediction_obstacle) {
 }
 
 void StaticObstacle::GetVertexes(std::vector<double> *vertexes_x,

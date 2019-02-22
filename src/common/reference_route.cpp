@@ -58,5 +58,4 @@ void ReferenceRoute::FromSDToXY(double s, double d,
     *y = y0 + d * cos(theta0);
 
 }
-
-}
+} // namespace planning

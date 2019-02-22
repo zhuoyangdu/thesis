@@ -38,7 +38,6 @@ public:
 
 private:
     std::vector<StaticObstacle> obstacles_;
-
 };
 }
 #endif //PLANNING_OBSTACLES_H

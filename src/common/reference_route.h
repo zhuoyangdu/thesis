@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "../utils/spline.h"
+
 #include "environment_conf.pb.h"
 
 namespace planning {
@@ -42,8 +43,6 @@ private:
 
     utils::Spline curve_x_;
     utils::Spline curve_y_;
-
-
 };
 
 }
