@@ -2,16 +2,16 @@
 // Created by zhuoyang on 2018-12-30.
 //
 
-#include "obstacles.h"
+#include "static_obstacles.h"
 
 
 namespace planning {
 
-Obstacle::Obstacle(const planning::PredictionObstacle& prediction_obstacle)
+StaticObstacle::StaticObstacle(const planning::PredictionObstacle& prediction_obstacle)
     : obstacle_(prediction_obstacle){
 }
 
-void Obstacle::GetVertexes(std::vector<double> *vertexes_x,
+void StaticObstacle::GetVertexes(std::vector<double> *vertexes_x,
                            std::vector<double> *vertexes_y) const {
     double angle1 = atan2(width_, length_) + obstacle_.theta();
     double angle2 = obstacle_.theta() - atan2(width_, length_);
@@ -29,7 +29,7 @@ void Obstacle::GetVertexes(std::vector<double> *vertexes_x,
     *vertexes_y = {y1, y2, y3, y4};
 }
 
-Obstacles::Obstacles(const ReferenceRoute& reference_route,
+StaticObstacles::StaticObstacles(const ReferenceRoute& reference_route,
                      const planning::PredictionObstacles &prediction_obstacles) {
     for (int i = 0; i < prediction_obstacles.obstacle_size(); ++i) {
         PredictionObstacle pre_obs = prediction_obstacles.obstacle(i);
@@ -37,7 +37,7 @@ Obstacles::Obstacles(const ReferenceRoute& reference_route,
         reference_route.FromXYToSD(pre_obs.x(), pre_obs.y(), &os, &od);
         pre_obs.set_s(os);
         pre_obs.set_d(od);
-        Obstacle obstacle(pre_obs);
+        StaticObstacle obstacle(pre_obs);
         obstacles_.push_back(obstacle);
     }
 }

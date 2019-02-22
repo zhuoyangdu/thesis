@@ -7,43 +7,53 @@
 namespace planning {
 
 void StructuredFrame::Init(const PlanningConf& planning_conf) {
-    path_planner_conf_ = planning_conf.path_planner_conf();
+    planning_conf_ = planning_conf;
     EnvironmentConf environment_conf = planning_conf.environment_conf();
+
     reference_route_ = ReferenceRoute(environment_conf.reference_route());
-    vehicle_state_.set_x(environment_conf.ego_car().x());
-    vehicle_state_.set_y(environment_conf.ego_car().y());
-    vehicle_state_.set_theta(environment_conf.ego_car().theta());
-    double s0, d0;
-    reference_route_.FromXYToSD(vehicle_state_.x(), vehicle_state_.y(), &s0, &d0);
-    vehicle_state_.set_s(s0);
-    vehicle_state_.set_d(d0);
-    environment_conf.mutable_ego_car()->CopyFrom(vehicle_state_);
-    path_planner_conf_.mutable_environment_conf()->CopyFrom(environment_conf);
+    vehicle_state_ = InitVehicleState(environment_conf.ego_car());
 
-    std::cout << "[StructuredFrame] Init vehicle state: x:" << vehicle_state_.x()
-                << ", y:" << vehicle_state_.y()
-                << ", theta:" << vehicle_state_.theta()
-                << ", s:" << vehicle_state_.s()
-                << ", d:" << vehicle_state_.d() << std::endl;
-    double nx, ny;
-    reference_route_.FromSDToXY(s0, d0, &nx, &ny);
-    if (nx != vehicle_state_.x() || ny != vehicle_state_.y()) {
-        std::cout << "[planner] warning: wrong in reference route." << std::endl;
+    InitObstacles();
+
+    InitPathPlannerEnv();
+
+    InitSpeedPlannerEnv();
+}
+
+void StructuredFrame::InitObstacles() {
+    // Init obstacles.
+    EnvironmentConf environment_conf = planning_conf_.environment_conf();
+    static_obstacles_ = StaticObstacles(reference_route_,
+                                        environment_conf.static_obs());
+
+    dynamic_obstacles_.clear_obstacle();
+    for (int i = 0; i < environment_conf.dynamic_obs().obstacle_size(); ++i) {
+        PredictionObstacle obs = environment_conf.dynamic_obs().obstacle(i);
+        obs.set_theta(M_PI / 2 - obs.theta());
+        dynamic_obstacles_.add_obstacle()->CopyFrom(obs);
     }
+    for (int i = 0; i < environment_conf.static_obs().obstacle_size(); ++i) {
+        PredictionObstacle obs = environment_conf.static_obs().obstacle(i);
+        obs.set_theta(M_PI / 2 - obs.theta());
+        dynamic_obstacles_.add_obstacle()->CopyFrom(obs);
+    }
+}
 
-    obstacles_ = Obstacles(reference_route_, environment_conf.static_obs());
+void StructuredFrame::InitPathPlannerEnv() {
+    // Init frenet frame.
+    FrenetFrameConf frenet_conf =
+        planning_conf_.path_planner_conf().rrt_conf().frenet_conf();
+    frenet_frame_= FrenetFrame(reference_route_, vehicle_state_,
+                               static_obstacles_, frenet_conf);
 
-    frenet_frame_= FrenetFrame(reference_route_, vehicle_state_, obstacles_,
-                        path_planner_conf_.rrt_conf().frenet_conf());
-
-    pixel_goal_ = frenet_frame_.FromFrenetToImage(
-        path_planner_conf_.environment_conf().goal().delta_s()
-        + vehicle_state_.s(), path_planner_conf_.environment_conf().goal().d());
-
+    // Init pixel goal and current state.
+    auto goal = planning_conf_.path_planner_conf().environment_conf().goal();
+    pixel_goal_ = frenet_frame_.FromFrenetToImage(goal.delta_s()
+                  + vehicle_state_.s(), goal.d());
     pixel_current_ = frenet_frame_.FromFrenetToImage(vehicle_state_.s(),
                                                      vehicle_state_.d());
-    // Get Image border.
-    FrenetFrameConf frenet_conf = path_planner_conf_.rrt_conf().frenet_conf();
+
+    // Get Image border of path planner.
     image_border_.set_delta_col(frenet_conf.ds());
     image_border_.set_delta_row(frenet_conf.dd());
     image_border_.set_col0(vehicle_state_.s());
@@ -54,6 +64,34 @@ void StructuredFrame::Init(const PlanningConf& planning_conf) {
                            frenet_conf.image_row() * frenet_conf.dd());
     image_border_.set_resolution_col(frenet_conf.image_col());
     image_border_.set_resolution_row(frenet_conf.image_row());
+}
+
+void StructuredFrame::InitSpeedPlannerEnv() {
+    std::string road_file = planning_conf_.speed_profile_conf().road_file();
+    if (!planning_conf_.run_path()) {
+        reference_path_ = ReferencePath(road_file);
+    }
+}
+
+VehicleState StructuredFrame::InitVehicleState(const VehicleState& ego_car) {
+    auto vehicle_state = ego_car;
+    vehicle_state.set_theta(M_PI / 2 - vehicle_state.theta());
+    double s0, d0;
+    reference_route_.FromXYToSD(vehicle_state.x(), vehicle_state.y(), &s0, &d0);
+    vehicle_state.set_s(s0);
+    vehicle_state.set_d(d0);
+
+    std::cout << "[StructuredFrame] Init vehicle state: x:" << vehicle_state.x()
+                << ", y:" << vehicle_state.y()
+                << ", theta:" << vehicle_state.theta()
+                << ", s:" << vehicle_state.s()
+                << ", d:" << vehicle_state.d() << std::endl;
+    double nx, ny;
+    reference_route_.FromSDToXY(s0, d0, &nx, &ny);
+    if (nx != vehicle_state.x() || ny != vehicle_state.y()) {
+        std::cout << "[StructuredFrame] warning: wrong in reference route." << std::endl;
+    }
+    return vehicle_state;
 }
 
 void StructuredFrame::GetSearchingGridMap(

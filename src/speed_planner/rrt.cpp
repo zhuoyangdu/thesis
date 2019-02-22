@@ -7,11 +7,19 @@
 using namespace std;
 namespace planning {
     namespace speed_profile {
-
         RRT::RRT(const SpeedProfileConf& speed_profile_conf)
             : speed_profile_conf_(speed_profile_conf) {
             rrt_conf_ = speed_profile_conf.rrt();
-            obstacles_ = Obstacles(speed_profile_conf);
+            obstacles_ = DynamicObstacles(speed_profile_conf);
+        }
+
+        bool RRT::Solve(const std::unique_ptr<Frame>& frame) {
+            VehicleState vehicle_state = frame->vehicle_state();
+            PredictionObstacles obstacle_map = frame->dynamic_obstacles();
+            ReferencePath reference_path = frame->reference_path();
+            Trajectory trajectory;
+            return GenerateTrajectory(vehicle_state, obstacle_map,
+                                      reference_path, &trajectory);
         }
 
         bool RRT::GenerateTrajectory(const VehicleState &vehicle_state,
@@ -54,8 +62,7 @@ namespace planning {
             double min_cost = 10000;
             std::deque<Node> min_path;
 
-            clock_t start, ends;
-            start = clock();
+            utils::Timer t1;
             srand(time(NULL));
             while (n_sample < rrt_conf_.max_failed_attemptes()) {
 
@@ -92,17 +99,11 @@ namespace planning {
                 }
             }
 
-            //cout << "min_cost:" << std::endl;
-            //cout << "risk: " << rrt_conf_.kr() * path_cost[0]
-            //    << ", smoothness: " << rrt_conf_.ks() * path_cost[1]
-            //    << ", e_val: " << rrt_conf_.kv() * path_cost[2] << std::endl;
-
             cout << endl;
             cout << "------Result------" << endl;
             cout << "Total attemps:" << n_sample << ", feasible sample:" << n_feasible <<
                  endl;
-            ends = clock();
-            cout << "Elapsed time:" << double(ends - start) / CLOCKS_PER_SEC << endl;
+            cout << "Elapsed time:" <<t1.duration() << endl;
 
             if (n_path > 0) {
                 std::deque<Node> final_path = PostProcessing(min_path);
@@ -129,7 +130,6 @@ namespace planning {
             }
 
             cout << endl;
-            // PrintTree();
             return true;
         }
 
@@ -314,7 +314,7 @@ namespace planning {
         double RRT::GetGeometryPathLength(double x, double y) {
             double s = 0;
             double d = 0;
-            Spline::getClosestPointOnCurve(curve_x_, curve_y_, x, y, &s, &d);
+            utils::Spline::getClosestPointOnCurve(curve_x_, curve_y_, x, y, &s, &d);
             double ref_x = curve_x_(s);
             double ref_y = curve_y_(s);
             return s;
@@ -476,7 +476,8 @@ namespace planning {
         }
 
         double getAngle(const Node &node, const Node &parent_node,
-                        const Spline &curve_x, const Spline &curve_y) {
+                        const utils::Spline &curve_x,
+                        const utils::Spline &curve_y) {
             double node_x = curve_x(node.distance);
             double node_y = curve_y(node.distance);
             double parent_x = curve_x(parent_node.distance);
@@ -515,7 +516,7 @@ namespace planning {
                 path_t.push_back(point.time);
                 path_s.push_back(point.distance);
             }
-            Spline st;
+            utils::Spline st;
             st.setPoints(path_t, path_s);
 
             for (int i = 0; i < path.size() - 1; i++) {
@@ -552,8 +553,8 @@ namespace planning {
         }
 
         void RRT::SendVisualization(const std::deque<Node> &final_path,
-                                    const Spline &curve_x,
-                                    const Spline &curve_y) {
+                                    const utils::Spline &curve_x,
+                                    const utils::Spline &curve_y) {
             time_t t = std::time(0);
             struct tm * now = std::localtime( & t );
             string time_s;

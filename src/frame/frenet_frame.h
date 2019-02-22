@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../common/obstacles.h"
+#include "../common/static_obstacles.h"
 #include "vehicle_state.pb.h"
 #include "environment_conf.pb.h"
 #include "../common/reference_route.h"
@@ -29,7 +29,7 @@ public:
 
     FrenetFrame(const ReferenceRoute& reference_route,
                 const VehicleState& vehicle_state,
-                const Obstacles& obstacles,
+                const StaticObstacles& obstacles,
                 const FrenetFrameConf& frenet_frame_conf);
 
     void FromFrenetToImage(double s, double d,
@@ -76,7 +76,7 @@ private:
 
     planning::ReferenceRoute reference_route_;
     VehicleState vehicle_state_;
-    vector<Obstacle> obstacles_;
+    vector<StaticObstacle> obstacles_;
     FrenetFrameConf frenet_frame_conf_;
 
     double d0_ = 0.0;

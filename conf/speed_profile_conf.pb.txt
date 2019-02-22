@@ -1,5 +1,5 @@
 single: True
-road_file: "/Users/zhuoyang/Documents/du/origin_data/selected/scenario5/center/globalpath.txt"
+road_file: "/home/zy/du/origin_data/selected/scenario5/center/globalpath.txt"
 test_config_file: "/Users/zhuoyang/workspace/planning/resources/roads/environment_conf_05.txt"
 scene: "complex"
 record: True

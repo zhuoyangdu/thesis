@@ -12,8 +12,8 @@
 #include "frame/frame.h"
 #include "frame/structured_frame.h"
 #include "frame/unstructured_frame.h"
-#include "path_planner/searching_frame.h"
 #include "path_planner/heuristic_rrt.h"
+#include "speed_planner/rrt.h"
 
 #include "planning_conf.pb.h"
 #include "speed_profile_conf.pb.h"
@@ -46,7 +46,7 @@ class Planner
     std::unique_ptr<planning::path_planner::HeuristicRRT> path_planner_;
 
     speed_profile::SpeedProfileConf speed_profile_conf_;
-    // std::unique_ptr<RRT> rrt_ptr_;
+    std::unique_ptr<speed_profile::RRT> speed_profile_planner_;
 
 
 };

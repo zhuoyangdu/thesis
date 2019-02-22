@@ -14,9 +14,9 @@
 using namespace std;
 
 namespace  planning {
-class Obstacle {
+class StaticObstacle {
 public:
-    Obstacle(const PredictionObstacle& prediction_obstacle);
+    StaticObstacle(const PredictionObstacle& prediction_obstacle);
 
     void GetVertexes(std::vector<double>* vertexes_x, std::vector<double>* vertexes_y) const;
 
@@ -27,17 +27,17 @@ private:
     double length_ = 5;
 };
 
-class Obstacles {
+class StaticObstacles {
 public:
-    Obstacles() = default;
+    StaticObstacles() = default;
 
-    Obstacles(const ReferenceRoute& reference_route,
+    StaticObstacles(const ReferenceRoute& reference_route,
               const PredictionObstacles& prediction_obstacles);
 
-    vector<Obstacle> obstacles() const {return obstacles_;}
+    vector<StaticObstacle> obstacles() const {return obstacles_;}
 
 private:
-    std::vector<Obstacle> obstacles_;
+    std::vector<StaticObstacle> obstacles_;
 
 };
 }

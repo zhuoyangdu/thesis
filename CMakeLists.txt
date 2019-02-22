@@ -31,8 +31,10 @@ include_directories(
 add_library(planner
             src/common/reference_route.cpp
             src/common/reference_route.h
-            src/common/obstacles.cpp
-            src/common/obstacles.h
+            src/common/static_obstacles.cpp
+            src/common/static_obstacles.h
+            src/common/reference_path.cpp
+            src/common/reference_path.h
             src/frame/frame.h
             src/frame/structured_frame.cpp
             src/frame/structured_frame.h
@@ -58,7 +60,12 @@ add_library(planner
             src/utils/spline.cpp
             src/utils/spline.h
             src/utils/timer.h
-            )
+            src/speed_planner/dynamic_obstacles.cpp
+            src/speed_planner/dynamic_obstacles.h
+            src/speed_planner/rrt.cpp
+            src/speed_planner/rrt.h
+            src/speed_planner/node.h
+)
 
 target_link_libraries(planner
         ${OpenCV_LIBRARIES}

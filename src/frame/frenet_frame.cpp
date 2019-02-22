@@ -8,7 +8,7 @@ namespace planning {
 
 FrenetFrame::FrenetFrame(const planning::ReferenceRoute &reference_route,
                          const planning::VehicleState &vehicle_state,
-                         const Obstacles &obstacles,
+                         const StaticObstacles &obstacles,
                          const FrenetFrameConf& frenet_frame_conf)
      : reference_route_(reference_route),
        vehicle_state_(vehicle_state),

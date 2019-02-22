@@ -12,4 +12,6 @@ message PlanningConf {
     optional string path_planner_conf_path = 4;
     optional string speed_profile_conf_path = 5;
     optional string environment_conf_path = 6;
+    optional bool run_path = 7;
+    optional bool run_speed = 8;
 }

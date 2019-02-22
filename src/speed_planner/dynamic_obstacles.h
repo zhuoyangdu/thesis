@@ -1,54 +1,56 @@
 #include <deque>
 #include <fstream>
 #include <cmath>
-#include "common.h"
+#include "node.h"
 #include "trajectory.pb.h"
 #include "prediction_obstacles.pb.h"
 #include "vehicle_state.pb.h"
-#include "../common/file_config.h"
-#include "../common/spline.h"
+#include "../utils/file_config.h"
+#include "../utils/spline.h"
 #include "planning_debug.pb.h"
 #include "speed_profile_conf.pb.h"
 
 namespace planning {
     namespace speed_profile {
-        class Obstacles {
+        class DynamicObstacles {
         public:
-            Obstacles() = default;
+            DynamicObstacles() = default;
 
-            Obstacles(const SpeedProfileConf& speed_profile_conf);
+            DynamicObstacles(const SpeedProfileConf& speed_profile_conf);
 
             void SetObstacles(const planning::PredictionObstacles &obstacle_map);
 
             bool CollisionFree(const Node &parent_node,
                                const Node &child_node,
-                               const Spline &curve_x,
-                               const Spline &curve_y);
+                               const utils::Spline &curve_x,
+                               const utils::Spline &curve_y);
 
 
             double RiskAssessment(const std::deque<Node> &path,
-                                  const Spline &curve_x, const Spline &curve_y);
+                                  const utils::Spline &curve_x,
+                                  const utils::Spline &curve_y);
 
             void InitializeDistanceMap(const VehicleState &vehicle_state,
-                                       const Spline &curve_x,
-                                       const Spline &curve_y,
+                                       const utils::Spline &curve_x,
+                                       const utils::Spline &curve_y,
                                        double s0);
 
             double ReadDistanceMap(const Node &node);
 
             double ComputeTTC(double node_time, double node_distance,
                               double node_vel,
-                              const Spline &curve_x, const Spline &curve_y);
+                              const utils::Spline &curve_x,
+                              const utils::Spline &curve_y);
 
             std::vector<std::vector<double>> ComputeTTCForFixedVel(
                     double current_path_length,
                     double node_vel,
-                    const Spline &curve_x,
-                    const Spline &curve_y);
+                    const utils::Spline &curve_x,
+                    const utils::Spline &curve_y);
 
             void ComputeTTCMap(double current_path_length,
-                               const Spline &curve_x,
-                               const Spline &curve_y);
+                               const utils::Spline &curve_x,
+                               const utils::Spline &curve_y);
 
             std::vector<planning::PredictionObstacle> GetObstacles() {
                 return obstacles_;

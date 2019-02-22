@@ -41,15 +41,15 @@ void Planner::Run() {
 
 void Planner::RegisterPlanner() {
     path_planner_.reset(new path_planner::HeuristicRRT(path_planner_conf_));
+    speed_profile_planner_.reset(new speed_profile::RRT(speed_profile_conf_));
 }
 
 void Planner::RunPathPlanner() {
-    path_planner::SearchingFrame searching_frame(path_planner_conf_, frame_);
-    path_planner_->MultiThreadSolve(&searching_frame);
+    path_planner_->MultiThreadSolve(frame_);
 }
 
 void Planner::RunSpeedPlanner() {
-
+    bool is_success = speed_profile_planner_->Solve(frame_);
 }
 
 }

@@ -7,14 +7,14 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-
-#include <time.h>
 #include <map>
 
-#include "common.h"
-#include "../common/spline.h"
-#include "obstacles.h"
-#include "ReferencePath.h"
+#include "node.h"
+#include "../utils/spline.h"
+#include "dynamic_obstacles.h"
+#include "../common/reference_path.h"
+#include "../frame/frame.h"
+#include "../utils/timer.h"
 
 #include "vehicle_state.pb.h"
 #include "trajectory.pb.h"
@@ -32,6 +32,8 @@ namespace planning {
                                     const PredictionObstacles &obstacle_map,
                                     const ReferencePath& reference_path,
                                     Trajectory *trajectory);
+
+            bool Solve(const std::unique_ptr<Frame>& frame);
 
         private:
             double GetGeometryPathLength(double x, double y);
@@ -76,8 +78,8 @@ namespace planning {
             void newFile();
 
             void SendVisualization(const std::deque<Node> &final_path,
-                                   const Spline &curve_x,
-                                   const Spline &curve_y);
+                                   const utils::Spline &curve_x,
+                                   const utils::Spline &curve_y);
 
             void ChooseParent(const Node &nearest_node, Node *new_node);
 
@@ -95,13 +97,13 @@ namespace planning {
 
         private:
 
-            Obstacles obstacles_;
+            DynamicObstacles obstacles_;
             std::vector<Node> tree_;
             double max_tree_t_ = 0;
 
             ReferencePath reference_path_;
-            Spline curve_x_;
-            Spline curve_y_;
+            utils::Spline curve_x_;
+            utils::Spline curve_y_;
             int is_rand_ = 0;
 
             std::string planning_path_;

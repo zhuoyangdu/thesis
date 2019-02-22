@@ -22,6 +22,7 @@
 #include "../common/planning_status.h"
 #include "image_proc.h"
 #include "searching_frame.h"
+#include "../frame/frame.h"
 
 #include "node.h"
 #include "probablistic_map.h"
@@ -40,15 +41,10 @@ public:
 
     explicit HeuristicRRT(const PathPlannerConf& path_planner_conf);
 
-    //PlanningStatus Solve(const VehicleState& vehicle_state,
-    //                     SearchingFrame* environment);
-
     PlanningStatus Solve(const SearchingFrame* searching_frame);
     PlanningStatus MultiThreadSolve(const SearchingFrame* searching_frame);
-    //                                GridMap* environment);
 
-    // PlanningStatus StructuredSolve(const VehicleState& vehicle_state,
-    //                               const FrenetFrame& frenet_frame);
+    PlanningStatus MultiThreadSolve(const std::unique_ptr<Frame>& frame);
 
 private:
     void Init(const SearchingFrame* searching_frame);

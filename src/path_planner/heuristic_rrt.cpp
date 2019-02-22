@@ -91,6 +91,11 @@ PlanningStatus HeuristicRRT::Solve(const SearchingFrame* searching_frame) {
     return PlanningStatus::OK();
 }
 
+PlanningStatus HeuristicRRT::MultiThreadSolve(
+        const std::unique_ptr<Frame>& frame) {
+    SearchingFrame searching_frame(path_planner_conf_, frame);
+    return MultiThreadSolve(&searching_frame);
+}
 
 PlanningStatus HeuristicRRT::MultiThreadSolve(const SearchingFrame* searching_frame) {
     utils::Timer t1;
