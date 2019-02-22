@@ -21,7 +21,7 @@ class StructuredFrame : public Frame {
 public:
     StructuredFrame() = default;
 
-    void Init(const PathPlannerConf& path_planner_conf);
+    void Init(const PlanningConf& planning_conf);
 
     cv::Point PixelGoal() const {return pixel_goal_;};
 

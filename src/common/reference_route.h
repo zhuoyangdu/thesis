@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-#include "spline.h"
+#include "../utils/spline.h"
 #include "environment_conf.pb.h"
 
 namespace planning {
@@ -19,9 +19,9 @@ public:
 
     ReferenceRoute(const planning::Route& reference_route);
 
-    Spline get_x() const {return curve_x_;}
+    utils::Spline get_x() const {return curve_x_;}
 
-    Spline get_y() const {return curve_y_;}
+    utils::Spline get_y() const {return curve_y_;}
 
     double GetCurvature(double s);
 
@@ -40,8 +40,8 @@ private:
     void RouteSpline(const std::vector<double>& xs,
                      const std::vector<double>& ys);
 
-    Spline curve_x_;
-    Spline curve_y_;
+    utils::Spline curve_x_;
+    utils::Spline curve_y_;
 
 
 };

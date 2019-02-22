@@ -17,7 +17,7 @@ ReferenceRoute::ReferenceRoute(const planning::Route &reference_route) {
 void ReferenceRoute::RouteSpline(const std::vector<double>& xs,
                                  const std::vector<double>& ys) {
     double path_length;
-    Spline::fitCurve(xs, ys, &curve_x_, &curve_y_, &path_length);
+    utils::Spline::fitCurve(xs, ys, &curve_x_, &curve_y_, &path_length);
     std::cout << "path length:" << path_length << std::endl;
 }
 
@@ -32,7 +32,7 @@ double ReferenceRoute::GetCurvature(double s) {
 
 void ReferenceRoute::FromXYToSD(double x, double y,
                                 double* s, double* d) const {
-    Spline::getClosestPointOnCurve(
+    utils::Spline::getClosestPointOnCurve(
             curve_x_, curve_y_, x, y, s, d);
 
     double x0 = curve_x_(*s);

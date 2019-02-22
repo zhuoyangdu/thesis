@@ -17,7 +17,8 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS
         proto/speed_profile_conf.proto
         proto/trajectory.proto
         proto/planning_debug.proto
-        proto/path_planner_conf.proto)
+        proto/path_planner_conf.proto
+        proto/planning_conf.proto)
 
 add_library(planning_proto ${PROTO_HDRS} ${PROTO_SRCS})
 
@@ -27,13 +28,11 @@ include_directories(
         ${OpenCV_INCLUDE_DIRS}
 )
 
-add_library(path_planner
+add_library(planner
             src/common/reference_route.cpp
             src/common/reference_route.h
             src/common/obstacles.cpp
             src/common/obstacles.h
-            src/common/spline.h
-            src/common/spline.cpp
             src/frame/frame.h
             src/frame/structured_frame.cpp
             src/frame/structured_frame.h
@@ -41,8 +40,6 @@ add_library(path_planner
             src/frame/unstructured_frame.h
             src/frame/frenet_frame.cpp
             src/frame/frenet_frame.h
-            src/path_planner/path_planner.cpp
-            src/path_planner/path_planner.h
             src/path_planner/image_proc.cpp
             src/path_planner/image_proc.h
             src/path_planner/searching_frame.cpp
@@ -53,9 +50,17 @@ add_library(path_planner
             src/path_planner/heuristic_rrt.h
             src/path_planner/node.h
             src/path_planner/gnat.cpp
-            src/path_planner/gnat.h)
+            src/path_planner/gnat.h
+            src/planner.cpp
+            src/planner.h
+            src/utils/file_config.h
+            src/utils/string.h
+            src/utils/spline.cpp
+            src/utils/spline.h
+            src/utils/timer.h
+            )
 
-target_link_libraries(path_planner
+target_link_libraries(planner
         ${OpenCV_LIBRARIES}
         ${PROTOBUF_LIBRARY}
         planning_proto)
@@ -64,7 +69,7 @@ target_link_libraries(path_planner
 add_executable(thesis src/main.cpp)
 target_link_libraries(thesis
         ${OpenCV_LIBRARIES}
-        path_planner
+        planner
         planning_proto
         ${PROTOBUF_LIBRARY}
         )

@@ -8,6 +8,7 @@
 #include <cmath>
 
 namespace planning {
+namespace utils {
 
 // band matrix solver
 class band_matrix {
@@ -108,5 +109,6 @@ class Spline {
 };
 
 }  // namespace av_planning
+}
 
 #endif  //  OFFBOARD_CONTROL_TEST_FAKE_PLANNING_TEST_SRC_SPLINE_H_

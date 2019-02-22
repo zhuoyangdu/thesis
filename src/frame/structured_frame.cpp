@@ -6,9 +6,9 @@
 
 namespace planning {
 
-void StructuredFrame::Init(const planning::PathPlannerConf &path_planner_conf) {
-    path_planner_conf_ = path_planner_conf;
-    EnvironmentConf environment_conf = path_planner_conf_.environment_conf();
+void StructuredFrame::Init(const PlanningConf& planning_conf) {
+    path_planner_conf_ = planning_conf.path_planner_conf();
+    EnvironmentConf environment_conf = planning_conf.environment_conf();
     reference_route_ = ReferenceRoute(environment_conf.reference_route());
     vehicle_state_.set_x(environment_conf.ego_car().x());
     vehicle_state_.set_y(environment_conf.ego_car().y());

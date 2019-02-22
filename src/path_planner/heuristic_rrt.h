@@ -90,7 +90,7 @@ private:
 
     double FrenetPathLength(const std::vector<Node>& path);
 
-    double FrenetNodeDistance(const Node& a, const Node& b);
+    // double FrenetNodeDistance(const Node& a, const Node& b);
 
     std::vector<Node> PostProcessing(const std::vector<Node>& path,
                                      const SearchingFrame* env);

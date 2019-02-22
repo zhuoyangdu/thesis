@@ -140,7 +140,6 @@ namespace planning {
             std::cout << "pixel:" << pixel << endl;
             return  0;
         }
-
     }
 
 

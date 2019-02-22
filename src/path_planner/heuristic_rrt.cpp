@@ -54,13 +54,13 @@ void HeuristicRRT::Init(const SearchingFrame* searching_frame) {
 }
 
 PlanningStatus HeuristicRRT::Solve(const SearchingFrame* searching_frame) {
-    Timer t1;
+    utils::Timer t1;
     srand(time(0));
 
     Init(searching_frame);
     std::cout << "[HeuristicRRT] Init time:" << t1.duration() << std::endl;
 
-    Timer t2;
+    utils::Timer t2;
     Extend(searching_frame);
 
     std::cout << "[HeuristicRRT] shortest_path_length:" << shortest_path_length_
@@ -69,7 +69,7 @@ PlanningStatus HeuristicRRT::Solve(const SearchingFrame* searching_frame) {
 
     if (min_path_.size()!=0) {
         std::vector<Node> spline_path = PostProcessing(min_path_, searching_frame);
-        shortest_spath_length_ = FrenetPathLength(spline_path);
+        // shortest_spath_length_ = FrenetPathLength(spline_path);
         vector<double> global_x, global_y;
         GetGlobalPath(spline_path, searching_frame, &global_x, &global_y);
 
@@ -93,13 +93,13 @@ PlanningStatus HeuristicRRT::Solve(const SearchingFrame* searching_frame) {
 
 
 PlanningStatus HeuristicRRT::MultiThreadSolve(const SearchingFrame* searching_frame) {
-    Timer t1;
+    utils::Timer t1;
     srand(time(0));
 
     Init(searching_frame);
     std::cout << "[HeuristicRRT] Init time:" << t1.duration() << std::endl;
 
-    Timer t2;
+    utils::Timer t2;
     rrt_conf_.set_max_attemp(rrt_conf_.max_attemp() / 4);
     std::thread thread1(&HeuristicRRT::Extend, this, searching_frame);
     std::thread thread2(&HeuristicRRT::Extend, this, searching_frame);
@@ -117,7 +117,7 @@ PlanningStatus HeuristicRRT::MultiThreadSolve(const SearchingFrame* searching_fr
 
     if (min_path_.size()!=0) {
         std::vector<Node> spline_path = PostProcessing(min_path_, searching_frame);
-        shortest_spath_length_ = FrenetPathLength(spline_path);
+        // shortest_spath_length_ = FrenetPathLength(spline_path);
         vector<double> global_x, global_y;
         GetGlobalPath(spline_path, searching_frame, &global_x, &global_y);
 
@@ -186,7 +186,7 @@ void HeuristicRRT::PlotStructured(const SearchingFrame* environment,
     }
 
     imshow("result", img_env);
-    cv::waitKey(0);
+    cv::waitKey(1);
 }
 
 void HeuristicRRT::Extend(const SearchingFrame* searching_frame) {
@@ -385,11 +385,13 @@ double HeuristicRRT::PathLength(const std::vector<Node>& path) {
     return length;
 }
 
+/*
 double HeuristicRRT::FrenetNodeDistance(const Node& a, const Node& b) {
     double dd = (a.row() - b.row()) * path_planner_conf_.rrt_conf().frenet_conf().dd();
     double ds = (a.col() - b.col()) * path_planner_conf_.rrt_conf().frenet_conf().ds();
     return sqrt(dd * dd + ds * ds);
 }
+*/
 
 double HeuristicRRT::FrenetPathLength(const std::vector<Node>& path) {
     double length = 0;

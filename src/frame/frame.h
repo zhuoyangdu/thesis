@@ -5,7 +5,7 @@
 #ifndef THESIS_FRAME_H
 #define THESIS_FRAME_H
 
-#include "path_planner_conf.pb.h"
+#include "planning_conf.pb.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -15,7 +15,7 @@ class Frame {
     public:
         Frame() = default;
 
-        virtual void Init(const PathPlannerConf& path_planner_conf) = 0;
+        virtual void Init(const PlanningConf& planning_conf) = 0;
 
         virtual cv::Point PixelGoal() const = 0;
 

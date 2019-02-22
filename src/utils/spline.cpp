@@ -2,7 +2,7 @@
 #include <iostream>
 
 namespace planning {
-
+namespace utils {
 // band_matrix implementation
 // -------------------------
 
@@ -491,4 +491,6 @@ void Spline::fitCurve(const std::vector<double>& xs,
     curve_y->setPoints(lengths, ys);
 }
 
-}  // namespace av_planning
+}
+
+}

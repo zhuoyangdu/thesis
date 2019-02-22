@@ -11,12 +11,14 @@
 #include <chrono>
 
 namespace planning {
+namespace utils {
+
 class Timer {
 public:
     Timer() {
         start_ = std::chrono::system_clock::now();
     }
-    
+
     double duration() {
         auto end = std::chrono::system_clock::now();
         std::chrono::duration<double> elapsed_seconds = end - start_;
@@ -26,6 +28,6 @@ public:
 private:
     std::chrono::system_clock::time_point start_;
 };
-    
+}
 }
 #endif /* timer_h */
