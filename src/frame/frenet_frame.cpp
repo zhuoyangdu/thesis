@@ -22,13 +22,14 @@ FrenetFrame::FrenetFrame(const planning::ReferenceRoute &reference_route,
 }
 
 void FrenetFrame::DrawSDMap() {
+    /*
     std::cout << "frenet frame conf : dd: " << frenet_frame_conf_.dd() << ","
         << "ds:" << frenet_frame_conf_.ds()
         << "," << "row:" << frenet_frame_conf_.image_row()
         << ", col:" << frenet_frame_conf_.image_col() << std::endl;
     std::cout << "range d:" << frenet_frame_conf_.lane_width() * frenet_frame_conf_.min_lane() << ","
         << frenet_frame_conf_.lane_width() * frenet_frame_conf_.max_lane() << std::endl;
-
+*/
 
     cv::Mat img_frenet = cv::Mat::ones(frenet_frame_conf_.image_row(),
                                         frenet_frame_conf_.image_col(),

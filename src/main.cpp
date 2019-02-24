@@ -5,7 +5,7 @@
 int main() {
     // Path planner.
     planning::Planner planner;
-    planner.Run();
+    planner.Replan();
 
     return 0;
 }

@@ -47,9 +47,9 @@ void StructuredFrame::InitPathPlannerEnv() {
                                static_obstacles_, frenet_conf);
 
     // Init pixel goal and current state.
-    auto goal = planning_conf_.path_planner_conf().environment_conf().goal();
-    pixel_goal_ = frenet_frame_.FromFrenetToImage(goal.delta_s()
-                  + vehicle_state_.s(), goal.d());
+    auto goal = planning_conf_.environment_conf().goal();
+    pixel_goal_ = frenet_frame_.FromFrenetToImage(goal.delta_s() + vehicle_state_.s(),
+                                                  goal.d());
     pixel_current_ = frenet_frame_.FromFrenetToImage(vehicle_state_.s(),
                                                      vehicle_state_.d());
 

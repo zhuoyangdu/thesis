@@ -10,7 +10,7 @@ Planner::Planner() {
 
 void Planner::ParamConfig() {
     // Get configuration file path.
-    std::string conf_path = "/home/zy/thesis/conf/planning_conf.pb.txt";
+    std::string conf_path = "/home/jia/workspace/thesis/conf/planning_conf.pb.txt";
     utils::GetProtoFromASCIIFile(conf_path, &planning_conf_);
 
     utils::GetProtoFromASCIIFile(planning_conf_.path_planner_conf_path(),
@@ -39,6 +39,12 @@ void Planner::Run() {
     RunPathPlanner();
 }
 
+void Planner::Replan() {
+    path_planner_->MultiThreadSolve(frame_);
+    cv::waitKey(0);
+}
+
+
 void Planner::RegisterPlanner() {
     path_planner_.reset(new path_planner::HeuristicRRT(path_planner_conf_));
     speed_profile_planner_.reset(new speed_profile::RRT(speed_profile_conf_));
@@ -53,3 +59,4 @@ void Planner::RunSpeedPlanner() {
 }
 
 }
+

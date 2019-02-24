@@ -29,6 +29,3 @@ goal {
     col: 200
 }
 
-environment_conf_path: "/home/zy/thesis/resources/roads/environment_conf_01.txt"
-
-

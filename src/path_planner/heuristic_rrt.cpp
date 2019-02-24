@@ -110,11 +110,19 @@ PlanningStatus HeuristicRRT::MultiThreadSolve(const SearchingFrame* searching_fr
     std::thread thread2(&HeuristicRRT::Extend, this, searching_frame);
     std::thread thread3(&HeuristicRRT::Extend, this, searching_frame);
     std::thread thread4(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread5(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread6(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread7(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread8(&HeuristicRRT::Extend, this, searching_frame);
     // Extend(searching_frame);
     thread1.join();
     thread2.join();
     thread3.join();
     thread4.join();
+    // thread5.join();
+    // thread6.join();
+    // thread7.join();
+    // thread8.join();
 
     std::cout << "[HeuristicRRT] shortest_path_length:" << shortest_path_length_
     << ", spline: " << shortest_spath_length_ << std::endl;
@@ -191,7 +199,7 @@ void HeuristicRRT::PlotStructured(const SearchingFrame* environment,
     }
 
     imshow("result", img_env);
-    cv::waitKey(1);
+    cv::waitKey(0);
 }
 
 void HeuristicRRT::Extend(const SearchingFrame* searching_frame) {

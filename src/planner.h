@@ -4,7 +4,7 @@
 #include <fcntl.h>
 #include <iostream>
 #include <memory>
-#include <zconf.h>
+// #include <zconf.h>
 
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -20,6 +20,11 @@
 #include "speed_profile_conf.pb.h"
 #include "path_planner_conf.pb.h"
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+
 namespace planning {
 class Planner
 {
@@ -27,6 +32,8 @@ class Planner
     Planner();
 
     void Run();
+
+    void Replan();
 
  private:
     void ParamConfig();
