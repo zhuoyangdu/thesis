@@ -1,0 +1,47 @@
+syntax = "proto2";
+
+package planning.debug;
+
+message PathPlannerDebug {
+    optional Tree tree = 1;
+    optional Path path = 2;
+    optional Path spline_path = 3;
+    optional GlobalPath global_path = 4;
+    optional ObstacleImagePolygons obstacle_image_polygons = 5;
+    optional GlobalPoint vehicle_state = 6;
+    repeated GlobalPoint obstacles = 7;
+}
+
+message Tree {
+    repeated ImagePoint nodes = 1;
+}
+
+message ImagePoint {
+    optional int32 index = 1;
+    optional int32 parent_index = 2;
+    optional double row = 3;
+    optional double col = 4;
+}
+
+message Path {
+    repeated ImagePoint nodes = 1;
+}
+
+message GlobalPoint {
+    optional double x = 1;
+    optional double y = 2;
+    optional double theta = 3;
+    optional double s = 4;
+}
+
+message GlobalPath {
+    repeated GlobalPoint points = 1;
+}
+
+message ObstacleImagePolygons {
+    repeated ObstacleImagePolygon obstacles = 1;
+}
+
+message ObstacleImagePolygon {
+    repeated ImagePoint polygon = 1;
+}

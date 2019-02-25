@@ -5,7 +5,7 @@
 #include <memory>
 #include <fstream>
 #include <string>
-
+#include <sstream>
 namespace planning {
 namespace utils {
 
@@ -28,6 +28,12 @@ class StringUtils {
             v->push_back(s.substr(pos1));
     }
 
+    static std::string int2string(int value)
+    {
+        std::stringstream ss;
+        ss<<value;
+        return ss.str();
+    }
 };
 
 }

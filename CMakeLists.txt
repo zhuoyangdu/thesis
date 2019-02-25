@@ -16,9 +16,10 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS
         proto/prediction_obstacles.proto
         proto/speed_profile_conf.proto
         proto/trajectory.proto
-        proto/planning_debug.proto
+        proto/path_planner_debug.proto
         proto/path_planner_conf.proto
-        proto/planning_conf.proto)
+        proto/planning_conf.proto
+        proto/planning_debug.proto)
 
 add_library(planning_proto ${PROTO_HDRS} ${PROTO_SRCS})
 
@@ -53,6 +54,7 @@ add_library(planner
             src/path_planner/node.h
             src/path_planner/gnat.cpp
             src/path_planner/gnat.h
+            src/path_planner/path_planner_record.cpp
             src/planner.cpp
             src/planner.h
             src/utils/file_config.h

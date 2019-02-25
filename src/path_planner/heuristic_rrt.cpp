@@ -631,6 +631,8 @@ void HeuristicRRT::RecordStructured(const std::vector<Node>& tree,
                           const std::vector<Node>& path,
                           const vector<double>& path_x,
                           const vector<double>& path_y) {
+    path_planner_record_.RecordTree(tree);
+    path_planner_record_.PrintToFile(path_planner_conf_.rrt_conf().record_path());
     time_t t = std::time(0);
     struct tm * now = std::localtime( & t );
     string time_s;

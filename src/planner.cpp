@@ -10,7 +10,7 @@ Planner::Planner() {
 
 void Planner::ParamConfig() {
     // Get configuration file path.
-    std::string conf_path = "/home/jia/workspace/thesis/conf/planning_conf.pb.txt";
+    std::string conf_path = "/home/zy/thesis/conf/planning_conf.pb.txt";
     utils::GetProtoFromASCIIFile(conf_path, &planning_conf_);
 
     utils::GetProtoFromASCIIFile(planning_conf_.path_planner_conf_path(),

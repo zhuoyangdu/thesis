@@ -24,6 +24,8 @@
 #include "node.h"
 #include "probablistic_map.h"
 #include "gnat.h"
+#include "path_planner_record.h"
+
 #include "../common/planning_status.h"
 #include "../frame/frame.h"
 
@@ -125,6 +127,7 @@ private:
     GNAT gnat_;
 
     std::mutex rrt_mutex;
+    PathPlannerRecord path_planner_record_;
 
 };
 

@@ -1,6 +1,6 @@
-environment_conf_path: "/home/jia/workspace/thesis/resources/roads/environment_conf_01.txt"
-path_planner_conf_path: "/home/jia/workspace/thesis/conf/path_planner_conf.pb.txt"
-speed_profile_conf_path: "/home/jia/workspace/thesis/conf/speed_profile_conf.pb.txt"
+environment_conf_path: "/home/zy/thesis/resources/roads/environment_conf_01.txt"
+path_planner_conf_path: "/home/zy/thesis/conf/path_planner_conf.pb.txt"
+speed_profile_conf_path: "/home/zy/thesis/conf/speed_profile_conf.pb.txt"
 
 
 run_path: True
