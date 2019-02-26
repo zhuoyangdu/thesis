@@ -41,6 +41,12 @@ class Frame {
 
         virtual PredictionObstacles dynamic_obstacles() const = 0;
 
+        virtual vector<vector<cv::Point>> obstacle_polygons() const = 0;
+
+        virtual void SetReferencePath(
+                const std::vector<double>& reference_path_x,
+                const std::vector<double>& reference_path_y) = 0;
+
 };
 }
 #endif //THESIS_FRAME_H

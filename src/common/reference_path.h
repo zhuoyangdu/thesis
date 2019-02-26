@@ -14,6 +14,10 @@ class ReferencePath {
 
     ReferencePath(const std::string& road_file);
 
+    ReferencePath(
+        const std::vector<double> path_x,
+        const std::vector<double> path_y);
+
     utils::Spline get_x() { return curve_x_; }
 
     utils::Spline get_y() { return curve_y_; }
@@ -26,8 +30,16 @@ class ReferencePath {
 
     double theta(double s) { return atan2(curve_x_.deriv1(s), curve_y_.deriv1(s)); }
 
+    std::vector<double> path_x() {return path_x_; }
+
+    std::vector<double> path_y() {return path_y_; }
+
  private:
     void GetGeometryPath();
+
+    void GetGeometryPath(
+        const std::vector<double> xs,
+        const std::vector<double> ys);
 
     std::string planning_path_;
     std::string road_file_;
@@ -35,6 +47,8 @@ class ReferencePath {
     utils::Spline curve_x_;
     utils::Spline curve_y_;
 
+    std::vector<double> path_x_;
+    std::vector<double> path_y_;
 };
 
 } // namespace planning

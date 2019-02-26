@@ -97,7 +97,7 @@ PlanningStatus HeuristicRRT::MultiThreadSolve(
     return MultiThreadSolve(&searching_frame);
 }
 
-PlanningStatus HeuristicRRT::MultiThreadSolve(const SearchingFrame* searching_frame) {
+PlanningStatus HeuristicRRT::MultiThreadSolve(SearchingFrame* searching_frame) {
     utils::Timer t1;
     srand(time(0));
 
@@ -134,8 +134,23 @@ PlanningStatus HeuristicRRT::MultiThreadSolve(const SearchingFrame* searching_fr
         vector<double> global_x, global_y;
         GetGlobalPath(spline_path, searching_frame, &global_x, &global_y);
 
-        if (rrt_conf_.record())
-            RecordStructured(tree_, spline_path, min_path_, global_x, global_y);
+        // if (rrt_conf_.record())
+        //     RecordStructured(tree_, spline_path, min_path_, global_x, global_y);
+
+        searching_frame->SetResult(global_x, global_y);
+        std::cout << "[HeuristicRRT] Global path result:" << std::endl;
+        for (int k = 0; k < global_x.size(); ++k) {
+            cout << "             " << global_x[k] << "," << global_y[k] << endl;
+        }
+
+        path_planner_record_.RecordTree(tree_);
+        path_planner_record_.RecordPath(min_path_);
+        path_planner_record_.RecordSplinePath(spline_path);
+        path_planner_record_.RecordObstaclePolygons(searching_frame->obstacle_polygons());
+        path_planner_record_.RecordVehicleState(searching_frame->vehicle_state());
+        path_planner_record_.RecordStaticObstacles(searching_frame->static_obstacles());
+        path_planner_record_.RecordGlobalPath(global_x, global_y);
+        path_planner_record_.PrintToFile(path_planner_conf_.rrt_conf().record_path());
 
         if (show_image_) {
             PlotStructured(searching_frame, spline_path);
@@ -631,8 +646,6 @@ void HeuristicRRT::RecordStructured(const std::vector<Node>& tree,
                           const std::vector<Node>& path,
                           const vector<double>& path_x,
                           const vector<double>& path_y) {
-    path_planner_record_.RecordTree(tree);
-    path_planner_record_.PrintToFile(path_planner_conf_.rrt_conf().record_path());
     time_t t = std::time(0);
     struct tm * now = std::localtime( & t );
     string time_s;

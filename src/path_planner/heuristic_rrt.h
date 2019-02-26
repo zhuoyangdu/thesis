@@ -44,7 +44,7 @@ public:
     explicit HeuristicRRT(const PathPlannerConf& path_planner_conf);
 
     PlanningStatus Solve(const SearchingFrame* searching_frame);
-    PlanningStatus MultiThreadSolve(const SearchingFrame* searching_frame);
+    PlanningStatus MultiThreadSolve(SearchingFrame* searching_frame);
 
     PlanningStatus MultiThreadSolve(const std::unique_ptr<Frame>& frame);
 

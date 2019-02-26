@@ -73,6 +73,7 @@ public:
     }
 
     vector<vector<cv::Point>> obstacle_polygons() const {
+        cout << "polygons:" << obstacle_polygons_.size() << endl;
         return obstacle_polygons_;
     }
 

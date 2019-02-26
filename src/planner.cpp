@@ -40,7 +40,11 @@ void Planner::Run() {
 }
 
 void Planner::Replan() {
-    path_planner_->MultiThreadSolve(frame_);
+    PlanningStatus status = path_planner_->MultiThreadSolve(frame_);
+    if (status.ok()) {
+        std::cout << "[Planner] path plan finished." << std::endl;
+    }
+    bool is_success = speed_profile_planner_->Solve(frame_);
     cv::waitKey(0);
 }
 
@@ -51,7 +55,10 @@ void Planner::RegisterPlanner() {
 }
 
 void Planner::RunPathPlanner() {
-    path_planner_->MultiThreadSolve(frame_);
+    PlanningStatus status = path_planner_->MultiThreadSolve(frame_);
+    if (status.ok()) {
+
+    }
 }
 
 void Planner::RunSpeedPlanner() {

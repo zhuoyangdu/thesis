@@ -244,6 +244,27 @@ void DynamicObstacles::recordDistanceMap() {
     }
     out_file_.close();
 }
+
+void DynamicObstacles::DistancePoint(
+    std::vector<double>* distance_t,
+    std::vector<double>* distance_s) {
+    if (obstacles_.size() == 0) {
+        return;
+    }
+    int nt = static_cast<int>(rrt_conf_.t_max() / kDeltaT) + 1;
+    int ns = static_cast<int>(rrt_conf_.s_max() / kDeltaS) + 1;
+    for (int i = 0; i <= nt; i++) {
+        for (int j = 0; j <= ns; j++) {
+            double t = i * kDeltaT;
+            double s = j * kDeltaS;
+
+            if (distance_map_[i][j] < rrt_conf_.danger_distance()) {
+                distance_t->push_back(i * kDeltaT);
+                distance_s->push_back(j * kDeltaS);
+            }
+        }
+    }
+}
 }
 
 }

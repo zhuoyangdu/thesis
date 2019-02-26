@@ -9,6 +9,21 @@ ReferencePath::ReferencePath(const std::string& road_file)
     GetGeometryPath();
 }
 
+ReferencePath::ReferencePath(
+        const std::vector<double> path_x,
+        const std::vector<double> path_y) {
+    GetGeometryPath(path_x, path_y);
+}
+
+void ReferencePath::GetGeometryPath(
+        const std::vector<double> xs,
+        const std::vector<double> ys) {
+    double path_length;
+    path_x_ = xs;
+    path_y_ = ys;
+    utils::Spline::fitCurve(xs, ys, &curve_x_, &curve_y_, &path_length);
+}
+
 void ReferencePath::GetGeometryPath() {
     std::vector<double> xs, ys;
     std::string line;
@@ -31,6 +46,8 @@ void ReferencePath::GetGeometryPath() {
     } else {
         std::cout << "cannot open path config file." << std::endl;
     }
+    path_x_ = xs;
+    path_y_ = ys;
     double path_length;
     utils::Spline::fitCurve(xs, ys, &curve_x_, &curve_y_, &path_length);
 }

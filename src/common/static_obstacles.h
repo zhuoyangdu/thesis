@@ -20,6 +20,12 @@ public:
 
     void GetVertexes(std::vector<double>* vertexes_x, std::vector<double>* vertexes_y) const;
 
+    double x() { return obstacle_.x(); }
+
+    double y() {return obstacle_.y(); }
+
+    double theta() {return obstacle_.theta();}
+
 private:
     PredictionObstacle obstacle_;
 

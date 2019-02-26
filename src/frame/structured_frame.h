@@ -51,6 +51,14 @@ public:
 
     ReferencePath reference_path() const { return reference_path_;}
 
+    vector<vector<cv::Point>> obstacle_polygons() const {
+        return frenet_frame_.obstacle_polygons();
+    }
+
+    void SetReferencePath(
+                const std::vector<double>& reference_path_x,
+                const std::vector<double>& reference_path_y);
+
 private:
     PlanningConf planning_conf_;
     // PathPlannerConf path_planner_conf_;

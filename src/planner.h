@@ -15,6 +15,7 @@
 #include "frame/unstructured_frame.h"
 #include "path_planner/heuristic_rrt.h"
 #include "speed_planner/rrt.h"
+#include "common/planning_status.h"
 
 #include "planning_conf.pb.h"
 #include "speed_profile_conf.pb.h"

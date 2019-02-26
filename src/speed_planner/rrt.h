@@ -20,6 +20,7 @@
 #include "trajectory.pb.h"
 #include "prediction_obstacles.pb.h"
 #include "speed_profile_conf.pb.h"
+#include "speed_profile_record.h"
 
 namespace planning {
     namespace speed_profile {
@@ -113,6 +114,7 @@ namespace planning {
             planning::speed_profile::SpeedProfileConf speed_profile_conf_;
             planning::speed_profile::RRTConfig rrt_conf_;
 
+            SpeedProfileRecord speed_profile_record_;
         };
     }
 }

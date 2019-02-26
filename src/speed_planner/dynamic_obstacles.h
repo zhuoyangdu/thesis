@@ -61,6 +61,11 @@ public:
         return obstacles_;
     }
 
+    void DistancePoint(
+        std::vector<double>* distance_t,
+        std::vector<double>* distance_s);
+
+
 private:
     std::vector<PredictionObstacle> obstacles_;
     std::vector<std::vector<double>> distance_map_;

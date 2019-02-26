@@ -1,0 +1,33 @@
+syntax = "proto2";
+
+package planning.debug.speed;
+
+message SpeedProfileDebug {
+    repeated stState tree = 1;
+    repeated stState st_path = 2;
+    optional xyStates prediction_veh = 3;
+    repeated xyStates prediction_obs = 4;
+    optional DistanceMap distance_map = 5;
+}
+
+message stState {
+    optional double t = 1;
+    optional double s = 2;
+    optional double v = 3;
+    optional int32 index = 4;
+    optional int32 parent_index = 5;
+}
+
+message xyStates {
+    repeated xyState states = 1;
+}
+
+message xyState {
+    optional double x = 1;
+    optional double y = 2;
+    optional double theta = 3;
+}
+
+message DistanceMap {
+    repeated stState points = 1;
+}

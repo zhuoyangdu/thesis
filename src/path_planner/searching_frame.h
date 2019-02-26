@@ -10,6 +10,7 @@
 #include "node.h"
 #include "image_proc.h"
 #include "../frame/frame.h"
+#include "../common/static_obstacles.h"
 
 #include "path_planner_conf.pb.h"
 
@@ -56,6 +57,24 @@ public:
     cv::Point PixelCurrentState() const { return current_point_; }
 
     void FromImageToXY(double row, double col, double*x, double* y) const;
+
+    std::vector<std::vector<cv::Point>> obstacle_polygons() const {
+        return frame_->obstacle_polygons();
+    }
+
+    VehicleState vehicle_state() const {
+        return frame_->vehicle_state();
+    }
+
+    StaticObstacles static_obstacles() const {
+        return frame_->static_obstacles();
+    }
+
+    void SetResult(const std::vector<double>& global_x,
+                   const std::vector<double>& global_y) {
+        frame_->SetReferencePath(global_x, global_y);
+    }
+
 private:
     void GenerateAttractiveProbMap();
 

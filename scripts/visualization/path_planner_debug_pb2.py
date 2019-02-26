@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='path_planner_debug.proto',
   package='planning.debug',
   syntax='proto2',
-  serialized_pb=_b('\n\x18path_planner_debug.proto\x12\x0eplanning.debug\"\xe2\x02\n\x10PathPlannerDebug\x12\"\n\x04tree\x18\x01 \x01(\x0b\x32\x14.planning.debug.Tree\x12\"\n\x04path\x18\x02 \x01(\x0b\x32\x14.planning.debug.Path\x12)\n\x0bspline_path\x18\x03 \x01(\x0b\x32\x14.planning.debug.Path\x12/\n\x0bglobal_path\x18\x04 \x01(\x0b\x32\x1a.planning.debug.GlobalPath\x12\x46\n\x17obstacle_image_polygons\x18\x05 \x01(\x0b\x32%.planning.debug.ObstacleImagePolygons\x12\x32\n\rvehicle_state\x18\x06 \x01(\x0b\x32\x1b.planning.debug.GlobalPoint\x12.\n\tobstacles\x18\x07 \x03(\x0b\x32\x1b.planning.debug.GlobalPoint\"1\n\x04Tree\x12)\n\x05nodes\x18\x01 \x03(\x0b\x32\x1a.planning.debug.ImagePoint\"K\n\nImagePoint\x12\r\n\x05index\x18\x01 \x01(\x05\x12\x14\n\x0cparent_index\x18\x02 \x01(\x05\x12\x0b\n\x03row\x18\x03 \x01(\x01\x12\x0b\n\x03\x63ol\x18\x04 \x01(\x01\"1\n\x04Path\x12)\n\x05nodes\x18\x01 \x03(\x0b\x32\x1a.planning.debug.ImagePoint\"=\n\x0bGlobalPoint\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\r\n\x05theta\x18\x03 \x01(\x01\x12\t\n\x01s\x18\x04 \x01(\x01\"9\n\nGlobalPath\x12+\n\x06points\x18\x01 \x03(\x0b\x32\x1b.planning.debug.GlobalPoint\"P\n\x15ObstacleImagePolygons\x12\x37\n\tobstacles\x18\x01 \x03(\x0b\x32$.planning.debug.ObstacleImagePolygon\"C\n\x14ObstacleImagePolygon\x12+\n\x07polygon\x18\x01 \x03(\x0b\x32\x1a.planning.debug.ImagePoint')
+  serialized_pb=_b('\n\x18path_planner_debug.proto\x12\x0eplanning.debug\"\xe2\x02\n\x10PathPlannerDebug\x12\"\n\x04tree\x18\x01 \x01(\x0b\x32\x14.planning.debug.Tree\x12\"\n\x04path\x18\x02 \x01(\x0b\x32\x14.planning.debug.Path\x12)\n\x0bspline_path\x18\x03 \x01(\x0b\x32\x14.planning.debug.Path\x12/\n\x0bglobal_path\x18\x04 \x01(\x0b\x32\x1a.planning.debug.GlobalPath\x12\x46\n\x17obstacle_image_polygons\x18\x05 \x01(\x0b\x32%.planning.debug.ObstacleImagePolygons\x12\x32\n\rvehicle_state\x18\x06 \x01(\x0b\x32\x1b.planning.debug.GlobalPoint\x12.\n\tobstacles\x18\x07 \x03(\x0b\x32\x1b.planning.debug.GlobalPoint\"1\n\x04Tree\x12)\n\x05nodes\x18\x01 \x03(\x0b\x32\x1a.planning.debug.ImagePoint\"K\n\nImagePoint\x12\r\n\x05index\x18\x01 \x01(\x05\x12\x14\n\x0cparent_index\x18\x02 \x01(\x05\x12\x0b\n\x03row\x18\x03 \x01(\x01\x12\x0b\n\x03\x63ol\x18\x04 \x01(\x01\"1\n\x04Path\x12)\n\x05nodes\x18\x01 \x03(\x0b\x32\x1a.planning.debug.ImagePoint\"=\n\x0bGlobalPoint\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\r\n\x05theta\x18\x03 \x01(\x01\x12\t\n\x01s\x18\x04 \x01(\x01\"9\n\nGlobalPath\x12+\n\x06points\x18\x01 \x03(\x0b\x32\x1b.planning.debug.GlobalPoint\"P\n\x15ObstacleImagePolygons\x12\x37\n\tobstacles\x18\x01 \x03(\x0b\x32$.planning.debug.ObstacleImagePolygon\"D\n\x14ObstacleImagePolygon\x12,\n\x08vertexes\x18\x01 \x03(\x0b\x32\x1a.planning.debug.ImagePoint')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -335,7 +335,7 @@ _OBSTACLEIMAGEPOLYGON = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='polygon', full_name='planning.debug.ObstacleImagePolygon.polygon', index=0,
+      name='vertexes', full_name='planning.debug.ObstacleImagePolygon.vertexes', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -354,7 +354,7 @@ _OBSTACLEIMAGEPOLYGON = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=784,
-  serialized_end=851,
+  serialized_end=852,
 )
 
 _PATHPLANNERDEBUG.fields_by_name['tree'].message_type = _TREE
@@ -368,7 +368,7 @@ _TREE.fields_by_name['nodes'].message_type = _IMAGEPOINT
 _PATH.fields_by_name['nodes'].message_type = _IMAGEPOINT
 _GLOBALPATH.fields_by_name['points'].message_type = _GLOBALPOINT
 _OBSTACLEIMAGEPOLYGONS.fields_by_name['obstacles'].message_type = _OBSTACLEIMAGEPOLYGON
-_OBSTACLEIMAGEPOLYGON.fields_by_name['polygon'].message_type = _IMAGEPOINT
+_OBSTACLEIMAGEPOLYGON.fields_by_name['vertexes'].message_type = _IMAGEPOINT
 DESCRIPTOR.message_types_by_name['PathPlannerDebug'] = _PATHPLANNERDEBUG
 DESCRIPTOR.message_types_by_name['Tree'] = _TREE
 DESCRIPTOR.message_types_by_name['ImagePoint'] = _IMAGEPOINT

@@ -19,7 +19,8 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS
         proto/path_planner_debug.proto
         proto/path_planner_conf.proto
         proto/planning_conf.proto
-        proto/planning_debug.proto)
+        proto/planning_debug.proto
+        proto/speed_profile_debug.proto)
 
 add_library(planning_proto ${PROTO_HDRS} ${PROTO_SRCS})
 
@@ -67,6 +68,7 @@ add_library(planner
             src/speed_planner/rrt.cpp
             src/speed_planner/rrt.h
             src/speed_planner/node.h
+            src/speed_planner/speed_profile_record.cpp
 )
 
 target_link_libraries(planner

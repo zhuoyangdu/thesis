@@ -43,5 +43,5 @@ message ObstacleImagePolygons {
 }
 
 message ObstacleImagePolygon {
-    repeated ImagePoint polygon = 1;
+    repeated ImagePoint vertexes = 1;
 }

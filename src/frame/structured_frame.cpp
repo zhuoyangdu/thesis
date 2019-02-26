@@ -73,6 +73,12 @@ void StructuredFrame::InitSpeedPlannerEnv() {
     }
 }
 
+void StructuredFrame::SetReferencePath(
+        const std::vector<double>& reference_path_x,
+        const std::vector<double>& reference_path_y) {
+    reference_path_ = ReferencePath(reference_path_x, reference_path_y);
+}
+
 VehicleState StructuredFrame::InitVehicleState(const VehicleState& ego_car) {
     auto vehicle_state = ego_car;
     vehicle_state.set_theta(M_PI / 2 - vehicle_state.theta());

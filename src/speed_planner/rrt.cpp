@@ -43,6 +43,13 @@ namespace planning {
             double s0 = GetGeometryPathLength(vehicle_state.x(), vehicle_state.y());
             cout << "s0:" << s0 << endl;
 
+            cout << "[SpeedProfile] reference path:" << endl;
+            std::vector<double> path_x = reference_path_.path_x();
+            std::vector<double> path_y = reference_path_.path_y();
+            for (int i = 0; i < path_x.size(); ++i) {
+                cout << "             " << path_x[i] << "," << path_y[i] << endl;
+            }
+
             // Initialize obstacles.
             obstacles_.SetObstacles(obstacle_map);
             obstacles_.InitializeDistanceMap(vehicle_state, curve_x_, curve_y_, s0);
@@ -124,6 +131,14 @@ namespace planning {
 
                     trajectory->add_vehicle_states()->CopyFrom(pose);
                 }
+
+                speed_profile_record_.RecordTree(tree_);
+                speed_profile_record_.RecordPath(rrt_conf_, final_path, curve_x_, curve_y_);
+                std::vector<double> distance_t, distance_s;
+                obstacles_.DistancePoint(&distance_t, &distance_s);
+                speed_profile_record_.RecordDistanceMap(distance_t, distance_s);
+                speed_profile_record_.RecordObstacles(obstacles_.GetObstacles());
+                speed_profile_record_.PrintToFile(speed_profile_conf_.record_path());
             } else {
                 printf("No path found.\n");
                 return false;
