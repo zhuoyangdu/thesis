@@ -138,10 +138,10 @@ PlanningStatus HeuristicRRT::MultiThreadSolve(SearchingFrame* searching_frame) {
         //     RecordStructured(tree_, spline_path, min_path_, global_x, global_y);
 
         searching_frame->SetResult(global_x, global_y);
-        std::cout << "[HeuristicRRT] Global path result:" << std::endl;
-        for (int k = 0; k < global_x.size(); ++k) {
-            cout << "             " << global_x[k] << "," << global_y[k] << endl;
-        }
+        //std::cout << "[HeuristicRRT] Global path result:" << std::endl;
+        //for (int k = 0; k < global_x.size(); ++k) {
+        //    cout << "             " << global_x[k] << "," << global_y[k] << endl;
+        //}
 
         path_planner_record_.RecordTree(tree_);
         path_planner_record_.RecordPath(min_path_);
@@ -214,7 +214,7 @@ void HeuristicRRT::PlotStructured(const SearchingFrame* environment,
     }
 
     imshow("result", img_env);
-    cv::waitKey(0);
+    // cv::waitKey(0);
 }
 
 void HeuristicRRT::Extend(const SearchingFrame* searching_frame) {

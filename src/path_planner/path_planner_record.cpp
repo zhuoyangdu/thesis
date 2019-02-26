@@ -105,9 +105,10 @@ void PathPlannerRecord::RecordGlobalPath(
 }
 
 void PathPlannerRecord::PrintToFile(const std::string& folder) {
-    std::string file_name = folder + "path_" + ".txt";
+    std::string file_name = folder + "path_" + utils::StringUtils::int2string(num_) + ".txt";
     std::cout << "[PathPlannerRecord] record file name:" << file_name << std::endl;
     utils::SetProtoToASCIIFile(path_planner_debug_, file_name);
+    num_= num_ + 1;
 }
 
 }

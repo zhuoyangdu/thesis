@@ -46,6 +46,8 @@ public:
 private:
     planning::debug::speed::SpeedProfileDebug speed_profile_debug_;
     std::string time_string_;
+
+    int num_ = 0;
 };
 
 }

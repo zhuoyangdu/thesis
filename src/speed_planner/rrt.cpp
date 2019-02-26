@@ -13,13 +13,14 @@ namespace planning {
             obstacles_ = DynamicObstacles(speed_profile_conf);
         }
 
-        bool RRT::Solve(const std::unique_ptr<Frame>& frame) {
+        Trajectory RRT::Solve(const std::unique_ptr<Frame>& frame) {
             VehicleState vehicle_state = frame->vehicle_state();
             PredictionObstacles obstacle_map = frame->dynamic_obstacles();
             ReferencePath reference_path = frame->reference_path();
             Trajectory trajectory;
-            return GenerateTrajectory(vehicle_state, obstacle_map,
+            bool is_success = GenerateTrajectory(vehicle_state, obstacle_map,
                                       reference_path, &trajectory);
+            return trajectory;
         }
 
         bool RRT::GenerateTrajectory(const VehicleState &vehicle_state,
@@ -43,12 +44,12 @@ namespace planning {
             double s0 = GetGeometryPathLength(vehicle_state.x(), vehicle_state.y());
             cout << "s0:" << s0 << endl;
 
-            cout << "[SpeedProfile] reference path:" << endl;
-            std::vector<double> path_x = reference_path_.path_x();
-            std::vector<double> path_y = reference_path_.path_y();
-            for (int i = 0; i < path_x.size(); ++i) {
-                cout << "             " << path_x[i] << "," << path_y[i] << endl;
-            }
+            //cout << "[SpeedProfile] reference path:" << endl;
+            //std::vector<double> path_x = reference_path_.path_x();
+            //std::vector<double> path_y = reference_path_.path_y();
+            //for (int i = 0; i < path_x.size(); ++i) {
+            //    cout << "             " << path_x[i] << "," << path_y[i] << endl;
+            //}
 
             // Initialize obstacles.
             obstacles_.SetObstacles(obstacle_map);
@@ -117,11 +118,11 @@ namespace planning {
                 SendVisualization(final_path, curve_x_, curve_y_);
                 std::vector<VehicleState> poses;
                 std::cout << "final trajectory:" << std::endl;
-                for (int i = 0; i < min_path.size(); i++) {
+                for (int i = 0; i < final_path.size(); i++) {
                     VehicleState pose;
-                    pose.set_timestamp(min_path[i].time + vehicle_state.timestamp());
-                    pose.set_velocity(min_path[i].velocity);
-                    pose.set_length(min_path[i].distance);
+                    pose.set_timestamp(final_path[i].time + vehicle_state.timestamp());
+                    pose.set_velocity(final_path[i].velocity);
+                    pose.set_length(final_path[i].distance);
                     pose.set_x(curve_x_(pose.length()));
                     pose.set_y(curve_y_(pose.length()));
                     pose.set_theta(atan2(curve_x_.deriv1(pose.length()), curve_y_.deriv1(pose.length())));
@@ -139,6 +140,9 @@ namespace planning {
                 speed_profile_record_.RecordDistanceMap(distance_t, distance_s);
                 speed_profile_record_.RecordObstacles(obstacles_.GetObstacles());
                 speed_profile_record_.PrintToFile(speed_profile_conf_.record_path());
+                // frame_->UpdateTrajectory(trajectory);
+
+
             } else {
                 printf("No path found.\n");
                 return false;

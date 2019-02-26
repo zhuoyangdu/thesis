@@ -15,6 +15,9 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
+#include "trajectory.pb.h"
+#include "vehicle_state.pb.h"
+
 namespace planning {
 class Frame {
     public:
@@ -47,6 +50,14 @@ class Frame {
                 const std::vector<double>& reference_path_x,
                 const std::vector<double>& reference_path_y) = 0;
 
+        virtual void UpdateState(double time_period) = 0;
+
+        void UpdateTrajectory(const Trajectory& trajectory) {
+            last_trajectory_ = trajectory;
+        }
+
+ protected:
+    Trajectory last_trajectory_;
 };
 }
 #endif //THESIS_FRAME_H

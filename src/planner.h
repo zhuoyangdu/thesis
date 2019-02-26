@@ -20,6 +20,7 @@
 #include "planning_conf.pb.h"
 #include "speed_profile_conf.pb.h"
 #include "path_planner_conf.pb.h"
+#include "trajectory.pb.h"
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -46,6 +47,8 @@ class Planner
     void RunSpeedPlanner();
 
     void RunPathPlanner();
+
+    void UpdateState();
 
     PlanningConf planning_conf_;
     PathPlannerConf path_planner_conf_;

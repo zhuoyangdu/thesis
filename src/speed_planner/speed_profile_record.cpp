@@ -59,9 +59,10 @@ void SpeedProfileRecord::RecordPath(
 
 
 void SpeedProfileRecord::PrintToFile(const std::string& folder) {
-    std::string file_name = folder + "speed_" + ".txt";
+    std::string file_name = folder + "speed_" + utils::StringUtils::int2string(num_) + ".txt";
     std::cout << "[SpeedProfileRecord] record file name:" << file_name << std::endl;
     utils::SetProtoToASCIIFile(speed_profile_debug_, file_name);
+    num_ = num_ + 1;
 }
 
 void SpeedProfileRecord::RecordDistanceMap(

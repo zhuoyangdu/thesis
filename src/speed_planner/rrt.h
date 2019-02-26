@@ -34,7 +34,7 @@ namespace planning {
                                     const ReferencePath& reference_path,
                                     Trajectory *trajectory);
 
-            bool Solve(const std::unique_ptr<Frame>& frame);
+            Trajectory Solve(const std::unique_ptr<Frame>& frame);
 
         private:
             double GetGeometryPathLength(double x, double y);

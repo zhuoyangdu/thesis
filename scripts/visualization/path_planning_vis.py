@@ -66,7 +66,7 @@ def plot_path(file_name):
     patches = []
     color = []
     vehicle_state = debug.vehicle_state
-    vehicle_state.theta = math.pi / 2 - vehicle_state.theta
+    vehicle_state.theta =  vehicle_state.theta
     polygon = get_vehicle_vertex(vehicle_state.x, vehicle_state.y, vehicle_state.theta)
     patches.append(polygon)
     color.append('w')
@@ -203,8 +203,8 @@ def plot_speed(file_name):
 
 if __name__ == '__main__':
     plt.style.use('ggplot')
-    plot_path("/home/zy/thesis/tmp_data/path_.txt")
-    plot_speed("/home/zy/thesis/tmp_data/speed_.txt")
+    plot_path("/home/zy/thesis/tmp_data/path_0.txt")
+    plot_speed("/home/zy/thesis/tmp_data/speed_0.txt")
 
     plt.show()
 

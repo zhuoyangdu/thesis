@@ -59,6 +59,8 @@ public:
                 const std::vector<double>& reference_path_x,
                 const std::vector<double>& reference_path_y);
 
+    void UpdateState(double time_period);
+
 private:
     PlanningConf planning_conf_;
     // PathPlannerConf path_planner_conf_;

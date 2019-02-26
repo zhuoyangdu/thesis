@@ -44,6 +44,9 @@ public:
 private:
     planning::debug::PathPlannerDebug path_planner_debug_;
     std::string time_string_;
+
+    int num_ = 0;
+
 };
 
 }

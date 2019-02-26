@@ -42,12 +42,12 @@ void Planner::Run() {
 void Planner::Replan() {
     PlanningStatus status = path_planner_->MultiThreadSolve(frame_);
     if (status.ok()) {
-        std::cout << "[Planner] path plan finished." << std::endl;
+    std::cout << "[Planner] path plan finished." << std::endl;
     }
-    bool is_success = speed_profile_planner_->Solve(frame_);
-    cv::waitKey(0);
+    Trajectory trajectory = speed_profile_planner_->Solve(frame_);
+    frame_->UpdateTrajectory(trajectory);
+    frame_->UpdateState(planning_conf_.time_period());
 }
-
 
 void Planner::RegisterPlanner() {
     path_planner_.reset(new path_planner::HeuristicRRT(path_planner_conf_));
@@ -62,7 +62,7 @@ void Planner::RunPathPlanner() {
 }
 
 void Planner::RunSpeedPlanner() {
-    bool is_success = speed_profile_planner_->Solve(frame_);
+    Trajectory trajectory = speed_profile_planner_->Solve(frame_);
 }
 
 }

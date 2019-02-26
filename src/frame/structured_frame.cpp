@@ -115,4 +115,33 @@ void StructuredFrame::FromImageToGlobalCoord(
     frenet_frame_.FromSDToXY(s, d, x, y);
 }
 
+void StructuredFrame::UpdateState(double time_period) {
+    EnvironmentConf environment_conf = planning_conf_.environment_conf();
+    double dt = 0;
+    Trajectory trajectory = last_trajectory_;
+    if (trajectory.vehicle_states_size() > 2) {
+        dt = trajectory.vehicle_states(1).timestamp()
+            - trajectory.vehicle_states(0).timestamp();
+    } else {
+        return;
+    }
+    int n = time_period / dt;
+    VehicleState next_state = trajectory.vehicle_states(n);
+    environment_conf.mutable_ego_car()->CopyFrom(next_state);
+
+    PredictionObstacles next_states;
+    for (int i = 0; i < environment_conf.dynamic_obs().obstacle_size(); ++i) {
+        PredictionObstacle next_obs = environment_conf.dynamic_obs().obstacle(i);
+        double vel = next_obs.velocity();
+        double theta = next_obs.theta();
+        next_obs.set_x(next_obs.x() + cos(theta)*vel);
+        next_obs.set_y(next_obs.y() + sin(theta)*vel);
+        next_states.add_obstacle()->CopyFrom(next_obs);
+    }
+    environment_conf.mutable_dynamic_obs()->CopyFrom(next_states);
+
+    std::string file_name = planning_conf_.environment_conf_path() + "_next";
+    std::cout << "[StructuredFrame] record file name:" << file_name << std::endl;
+    utils::SetProtoToASCIIFile(environment_conf, file_name);
+}
 }

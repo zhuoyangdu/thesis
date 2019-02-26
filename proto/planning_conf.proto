@@ -14,4 +14,5 @@ message PlanningConf {
     optional string environment_conf_path = 6;
     optional bool run_path = 7;
     optional bool run_speed = 8;
+    optional double time_period = 9;
 }
