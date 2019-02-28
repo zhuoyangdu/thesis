@@ -21,6 +21,7 @@ void ReferencePath::GetGeometryPath(
     double path_length;
     path_x_ = xs;
     path_y_ = ys;
+
     utils::Spline::fitCurve(xs, ys, &curve_x_, &curve_y_, &path_length);
 }
 

@@ -1,7 +1,7 @@
 single: True
 scene: "complex"
-record: True
-record_path: "/home/zy/thesis/tmp_data/"
+record: false
+record_path: "/Users/zhuoyang/workspace/thesis/tmp_data/"
 structured_map: True
 
 rrt {
@@ -25,9 +25,9 @@ rrt {
 	upper_range_a:0.1
 	lower_range_a:0.1
 	k_risk: 10
-	danger_distance: 2.5
+	danger_distance: 2
 	safe_distance: 100
 	car_width: 2
-	collision_distance: 2.5
+	collision_distance: 2
 	safe_ttc: 5
 }

@@ -9,8 +9,8 @@ rrt_conf {
     turn_on_prior: true
     k_repulsive: 0.1
     post_iteration: 200
-    record: true
-    record_path: "/home/zy/thesis/tmp_data/"
+    record: false
+    record_path: "/Users/zhuoyang/workspace/thesis/tmp_data/"
     uniform_sample: false
     pivots_k: 12
     frenet_conf {

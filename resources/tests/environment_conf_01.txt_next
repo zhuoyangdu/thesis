@@ -102,23 +102,23 @@ reference_route {
   }
 }
 ego_car {
-  x: -148.05488086071293
-  y: -5.7954802066447719
-  theta: 1.624855752721585
-  velocity: 9.7729617116334211
-  timestamp: 0.2
-  length: 1.9560847021701462
+  x: -145.04365358010457
+  y: -5.9547378217132074
+  theta: 1.6270034186830979
+  velocity: 9.8865287541018763
+  timestamp: 0.5
+  length: 1.9832962735636308
 }
 dynamic_obs {
   obstacle {
-    x: -116
+    x: -108
     y: -1.875
     theta: 0
     velocity: 4
     acceleration: 0
   }
   obstacle {
-    x: -105
+    x: -95
     y: -9.375
     theta: 0
     velocity: 5

@@ -106,24 +106,25 @@ PlanningStatus HeuristicRRT::MultiThreadSolve(SearchingFrame* searching_frame) {
 
     utils::Timer t2;
     rrt_conf_.set_max_attemp(rrt_conf_.max_attemp() / 4);
-    std::thread thread1(&HeuristicRRT::Extend, this, searching_frame);
-    std::thread thread2(&HeuristicRRT::Extend, this, searching_frame);
-    std::thread thread3(&HeuristicRRT::Extend, this, searching_frame);
-    std::thread thread4(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread1(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread2(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread3(&HeuristicRRT::Extend, this, searching_frame);
+    // std::thread thread4(&HeuristicRRT::Extend, this, searching_frame);
     // std::thread thread5(&HeuristicRRT::Extend, this, searching_frame);
     // std::thread thread6(&HeuristicRRT::Extend, this, searching_frame);
     // std::thread thread7(&HeuristicRRT::Extend, this, searching_frame);
     // std::thread thread8(&HeuristicRRT::Extend, this, searching_frame);
     // Extend(searching_frame);
-    thread1.join();
-    thread2.join();
-    thread3.join();
-    thread4.join();
+    // thread1.join();
+    // thread2.join();
+    // thread3.join();
+    // thread4.join();
     // thread5.join();
     // thread6.join();
     // thread7.join();
     // thread8.join();
 
+    Extend(searching_frame);
     std::cout << "[HeuristicRRT] shortest_path_length:" << shortest_path_length_
     << ", spline: " << shortest_spath_length_ << std::endl;
     std::cout << "[HeuristicRRT] expand elapsed seconds:" << t2.duration() << "s\n";
@@ -265,7 +266,7 @@ void HeuristicRRT::Extend(const SearchingFrame* searching_frame) {
         }
 
         // Add to tree.
-        rrt_mutex.lock();
+        // rrt_mutex.lock();
         i++;
         new_node.SetIndex(int(tree_.size()));
         new_node.SetParent(nearest_node.index());
@@ -281,7 +282,7 @@ void HeuristicRRT::Extend(const SearchingFrame* searching_frame) {
                 min_path_ = path;
             }
         }
-        rrt_mutex.unlock();
+        // rrt_mutex.unlock();
     }
 }
 

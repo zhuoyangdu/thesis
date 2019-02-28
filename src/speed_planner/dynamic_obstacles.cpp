@@ -94,6 +94,10 @@ void DynamicObstacles::InitializeDistanceMap(
         return;
     }
 
+    for (int k = 0; k < obstacles_.size(); k++) {
+        PredictionObstacle obs = obstacles_[k];
+    }
+
     for (int i = 0; i <= nt; i++) {
         for (int j = 0; j <= ns; j++) {
             double t = i * kDeltaT;
@@ -257,7 +261,6 @@ void DynamicObstacles::DistancePoint(
         for (int j = 0; j <= ns; j++) {
             double t = i * kDeltaT;
             double s = j * kDeltaS;
-
             if (distance_map_[i][j] < rrt_conf_.danger_distance()) {
                 distance_t->push_back(i * kDeltaT);
                 distance_s->push_back(j * kDeltaS);

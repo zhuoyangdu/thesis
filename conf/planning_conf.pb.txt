@@ -1,6 +1,6 @@
-environment_conf_path: "/home/zy/thesis/resources/tests/environment_conf_01_0.2.txt"
-path_planner_conf_path: "/home/zy/thesis/conf/path_planner_conf.pb.txt"
-speed_profile_conf_path: "/home/zy/thesis/conf/speed_profile_conf.pb.txt"
+environment_conf_path: "/Users/zhuoyang/workspace/thesis/for_vis/environment_conf_0.txt"
+path_planner_conf_path: "/Users/zhuoyang/workspace/thesis/conf/path_planner_conf.pb.txt"
+speed_profile_conf_path: "/Users/zhuoyang/workspace/thesis/conf/speed_profile_conf.pb.txt"
 
 
 run_path: True

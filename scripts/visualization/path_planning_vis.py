@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/local/bin/python3
 import path_planner_debug_pb2
 import speed_profile_debug_pb2
 import sys
@@ -41,48 +41,62 @@ def plot_roads(axes):
     axes.set_aspect(1.0)
 
 
-def plot_path(file_name):
-    debug = path_planner_debug_pb2.PathPlannerDebug()
+def parse_file(path_file_name, speed_file_name):
+    debug_path = path_planner_debug_pb2.PathPlannerDebug()
 
-    f = open(file_name, 'r')
-    text_format.Merge(f.read(), debug)
+    f = open(path_file_name, 'r')
+    text_format.Merge(f.read(), debug_path)
     f.close()
 
-    fig = plt.figure(tight_layout=True)
-    gs = gridspec.GridSpec(3,1)
+    debug_speed = speed_profile_debug_pb2.SpeedProfileDebug()
 
-    ax2 = fig.add_subplot(gs[0,0])
-    plot_roads(ax2)
-
-    global_path = debug.global_path
-    path_x = []
-    path_y = []
-    for point in global_path.points:
-        path_x.append(point.x)
-        path_y.append(point.y)
-    ax2.plot(path_x, path_y, 'g', linewidth=2, alpha=0.5)
+    f = open(speed_file_name, 'r')
+    text_format.Merge(f.read(), debug_speed)
+    f.close()
+    return debug_path, debug_speed
 
 
-    patches = []
-    color = []
-    vehicle_state = debug.vehicle_state
-    vehicle_state.theta =  vehicle_state.theta
-    polygon = get_vehicle_vertex(vehicle_state.x, vehicle_state.y, vehicle_state.theta)
-    patches.append(polygon)
-    color.append('w')
-    print(vehicle_state.theta)
-    for obstacle in debug.obstacles:
-        polygon = get_vehicle_vertex(obstacle.x, obstacle.y, obstacle.theta)
-        print(obstacle.theta)
-        patches.append(polygon)
-        color.append('r')
+def plots_allocation():
+    f = plt.figure(figsize=(12, 6),tight_layout=True)
+    gs0 = gridspec.GridSpec(1, 3, figure=f)
+    gs00 = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=gs0[0], hspace=0.5, wspace=0.5)
 
-    p = PatchCollection(patches, facecolors=color, alpha=0.6)
-    ax2.add_collection(p)
+    ax_path_tree = plt.Subplot(f, gs00[1:,:])
+    f.add_subplot(ax_path_tree)
+    ax_path_tree.set_title("RRT tree of path searching.", fontdict={'fontsize': 10})
+    ax_path_tree.set_xlabel("s(m)",  fontdict={'fontsize': 10})
+    ax_path_tree.set_ylabel("d(m)",  fontdict={'fontsize': 10})
+
+    ax_path_scene = plt.Subplot(f, gs00[0,0])
+    f.add_subplot(ax_path_scene)
+    ax_path_scene.set_title("Path Planning")
+    ax_path_scene.set_xlabel("x(m)",  fontdict={'fontsize': 10})
+    ax_path_scene.set_ylabel("y(m)",  fontdict={'fontsize': 10})
+
+    gs01 = gridspec.GridSpecFromSubplotSpec(3, 4, subplot_spec=gs0[1:], hspace=0.5, wspace=0.5)
+
+    ax_speed_scene = plt.Subplot(f, gs01[0, :])
+    f.add_subplot(ax_speed_scene)
+    ax_speed_scene.set_title("Speed Profile")
+    ax_speed_scene.set_xlabel("x(m)",  fontdict={'fontsize': 10})
+    ax_speed_scene.set_ylabel("y(m)",  fontdict={'fontsize': 10})
+
+    ax_speed_tree = plt.Subplot(f, gs01[1:, :-2])
+    f.add_subplot(ax_speed_tree)
+    ax_speed_tree.set_title("RRT tree of speed profile", fontdict={'fontsize': 10})
+    ax_speed_tree.set_xlabel("t(s)",  fontdict={'fontsize': 10})
+    ax_speed_tree.set_ylabel("s(m)",  fontdict={'fontsize': 10})
+
+    ax_speed_vel = plt.Subplot(f, gs01[1:, 2:])
+    f.add_subplot(ax_speed_vel)
+    ax_speed_vel.set_title("Speed profile result", fontdict={'fontsize': 10})
+    ax_speed_vel.set_xlabel("t(s)",  fontdict={'fontsize': 10})
+    ax_speed_vel.set_ylabel("v(m/s)",  fontdict={'fontsize': 10})
+
+    return ax_path_scene, ax_path_tree, ax_speed_scene, ax_speed_tree, ax_speed_vel
 
 
-    ax1 = fig.add_subplot(gs[1:,:])
-
+def plot_path_tree(ax1, debug):
     tree = debug.tree
     for i in range(1, len(tree.nodes)):
         node1 = tree.nodes[i]
@@ -123,17 +137,36 @@ def plot_path(file_name):
     ax1.set_ylim([0,512])
     ax1.set_aspect(1.0)
 
-def plot_speed(file_name):
-    debug = speed_profile_debug_pb2.SpeedProfileDebug()
 
-    f = open(file_name, 'r')
-    text_format.Merge(f.read(), debug)
-    f.close()
+def plot_path_scene(ax2, debug):
+    plot_roads(ax2)
 
-    fig = plt.figure(tight_layout=True)
-    gs = gridspec.GridSpec(3,4)
+    global_path = debug.global_path
+    path_x = []
+    path_y = []
+    for point in global_path.points:
+        path_x.append(point.x)
+        path_y.append(point.y)
+    ax2.plot(path_x, path_y, 'r', linewidth=2, alpha=0.5)
 
-    ax1 = fig.add_subplot(gs[0,:])
+    patches = []
+    color = []
+    vehicle_state = debug.vehicle_state
+    vehicle_state.theta = vehicle_state.theta
+    polygon = get_vehicle_vertex(vehicle_state.x, vehicle_state.y, vehicle_state.theta)
+    patches.append(polygon)
+    color.append('w')
+    print(vehicle_state.theta)
+    for obstacle in debug.obstacles:
+        polygon = get_vehicle_vertex(obstacle.x, obstacle.y, obstacle.theta)
+        print(obstacle.theta)
+        patches.append(polygon)
+        color.append('g')
+
+    p = PatchCollection(patches, facecolors=color, alpha=0.6)
+    ax2.add_collection(p)
+
+def plot_speed_scene(ax1, debug):
     plot_roads(ax1)
     polygons = []
     colors = []
@@ -168,7 +201,7 @@ def plot_speed(file_name):
     p = PatchCollection(polygons, facecolors=colors)
     ax1.add_collection(p)
 
-    ax2 = fig.add_subplot(gs[1:, :-2])
+def plot_speed_tree(ax2, debug):
     t = []
     s = []
     for point in debug.distance_map.points:
@@ -184,10 +217,9 @@ def plot_speed(file_name):
 
     ax2.plot([0,5], [0,12*5], 'g', linewidth=1)
     ax2.set_xlim([0,5])
-    ax2.set_ylim([0,100])
-    #ax2.set_aspect(1.0)
+    ax2.set_ylim([0,60])
+    # ax2.set_aspect(1.0)
 
-    ax3 = fig.add_subplot(gs[1:, 2:])
     path = debug.st_path
     t = []
     v = []
@@ -197,16 +229,46 @@ def plot_speed(file_name):
         v.append(node.v)
         s.append(node.s)
     ax2.plot(t, s, 'r', linewidth=1)
+
+
+def plot_speed_vel(ax3, debug):
+    path = debug.st_path
+    t = []
+    v = []
+    s = []
+    for node in path:
+        t.append(node.t)
+        v.append(node.v)
+        s.append(node.s)
     ax3.plot(t, v, 'g', linewidth=1)
     ax3.set_xlim([0,5])
     ax3.set_ylim([0,12])
 
+
 if __name__ == '__main__':
-    plt.style.use('ggplot')
-    plot_path("/home/zy/thesis/tmp_data/path_0.txt")
-    plot_speed("/home/zy/thesis/tmp_data/speed_0.txt")
+    last_vehicle_state = []
 
-    plt.show()
+    for i in range(1,37):
+        path_file_name = "/Users/zhuoyang/workspace/thesis/for_vis/path_"
+        speed_file_name = "/Users/zhuoyang/workspace/thesis/for_vis/speed_"
 
+        str_i = str(i)
+        if i < 10:
+            str_i = "0" + str_i
+        path_file_name = path_file_name + str_i+ ".txt"
+        speed_file_name = speed_file_name + str_i + ".txt"
+        debug_path, debug_speed = parse_file(path_file_name, speed_file_name)
 
+        plt.style.use('ggplot')
 
+        ax_path_scene, ax_path_tree, ax_speed_scene, ax_speed_tree, ax_speed_vel = plots_allocation()
+        plot_path_tree(ax_path_tree, debug_path)
+        plot_path_scene(ax_path_scene, debug_path)
+
+        plot_speed_scene(ax_speed_scene, debug_speed)
+        plot_speed_tree(ax_speed_tree, debug_speed)
+        plot_speed_vel(ax_speed_vel, debug_speed)
+
+        plt.savefig("pic/" + str_i + ".png")
+        # plt.show()
+        plt.clf()

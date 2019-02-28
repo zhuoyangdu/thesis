@@ -24,6 +24,7 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS
 
 add_library(planning_proto ${PROTO_HDRS} ${PROTO_SRCS})
 
+SET(OpenCV_DIR /usr/local/Cellar/opencv@3/3.4.5/share/OpenCV)
 find_package(OpenCV)
 
 include_directories(

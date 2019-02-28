@@ -10,7 +10,7 @@ Planner::Planner() {
 
 void Planner::ParamConfig() {
     // Get configuration file path.
-    std::string conf_path = "/home/zy/thesis/conf/planning_conf.pb.txt";
+    std::string conf_path = "/Users/zhuoyang/workspace/thesis/conf/planning_conf.pb.txt";
     utils::GetProtoFromASCIIFile(conf_path, &planning_conf_);
 
     utils::GetProtoFromASCIIFile(planning_conf_.path_planner_conf_path(),
@@ -42,7 +42,7 @@ void Planner::Run() {
 void Planner::Replan() {
     PlanningStatus status = path_planner_->MultiThreadSolve(frame_);
     if (status.ok()) {
-    std::cout << "[Planner] path plan finished." << std::endl;
+        std::cout << "[Planner] path plan finished." << std::endl;
     }
     Trajectory trajectory = speed_profile_planner_->Solve(frame_);
     frame_->UpdateTrajectory(trajectory);
